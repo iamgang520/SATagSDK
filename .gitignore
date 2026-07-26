@@ -1,0 +1,19 @@
+# CocoaPods 依赖和生成工程
+Pods/
+.bundle/
+
+# Xcode 构建和临时产物
+Build/
+DerivedData/
+*.xcresult/
+
+# Xcode 用户状态
+xcuserdata/
+*.xcuserstate
+
+# macOS
+.DS_Store
+
+# Swift/Xcode 缓存
+.swiftpm/
+.build/

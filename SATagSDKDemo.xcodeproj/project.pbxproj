@@ -1,0 +1,1074 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		F2BE27CCA9FE4D91BEBDDF27 /* BuildSATagSDKXCFramework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 8425609622984971ACB39E1C /* Build configuration list for PBXAggregateTarget "BuildSATagSDKXCFramework" */;
+			buildPhases = (
+				C5958116FC5B4C3A89EAD8A1 /* Build SATagSDK XCFramework */,
+			);
+			dependencies = (
+			);
+			name = BuildSATagSDKXCFramework;
+			productName = BuildSATagSDKXCFramework;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		A1B2C3D4E5F60718293A4B5C /* SATagInitializationCoordinatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B6C /* SATagInitializationCoordinatorTests.m */; };
+		A1B2C3D4E5F60718293A4B5D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B6E /* XCTest.framework */; };
+		A1B2C3D4E5F60718293A4B80 /* SATagInitializationCoordinator.m in Tests */ = {isa = PBXBuildFile; fileRef = F26F09D9A43A114A14366F83 /* SATagInitializationCoordinator.m */; };
+		A1B2C3D4E5F60718293A4B81 /* SATagConfigurationReader.m in Tests */ = {isa = PBXBuildFile; fileRef = CE3A396F04060D7BB47B6C52 /* SATagConfigurationReader.m */; };
+		A1B2C3D4E5F60718293A4B82 /* NSString+SATagTrim.m in Tests */ = {isa = PBXBuildFile; fileRef = 7FEA2EF5FB1E950099CFF7A0 /* NSString+SATagTrim.m */; };
+		A1B2C3D4E5F60718293A4B83 /* SATagTypes.m in Tests */ = {isa = PBXBuildFile; fileRef = FE2B29A553041A1E787AFBA1 /* SATagTypes.m */; };
+		A1B2C3D4E5F60718293A4B84 /* SATagInitializationResult.m in Tests */ = {isa = PBXBuildFile; fileRef = 298683762810903E2C5F77AC /* SATagInitializationResult.m */; };
+		A1B2C3D4E5F60718293A4B85 /* SATagEventResult.m in Tests */ = {isa = PBXBuildFile; fileRef = 44E1B21ED3ABB0F25D0AA0F6 /* SATagEventResult.m */; };
+		2E92E06E61504DF7CCACEC68 /* SATagLifecycleHook.m in Sources */ = {isa = PBXBuildFile; fileRef = AF67CF021B2BFDC50E35908C /* SATagLifecycleHook.m */; };
+		37E4AB6A14F3195ACD536133 /* SATagEventResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E1B21ED3ABB0F25D0AA0F6 /* SATagEventResult.m */; };
+		389192C199879C57AA0388DF /* SATagInitializationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 298683762810903E2C5F77AC /* SATagInitializationResult.m */; };
+		395F993B73F235C1F1E48363 /* SATagTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2B29A553041A1E787AFBA1 /* SATagTypes.m */; };
+		7197F4B79EB49051AAAC8E6A /* SATagSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = CE3583947B10695C21B8D5E9 /* SATagSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C2CF3B669258996B23E9A1A /* SATagDebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56975BD131B425B363A99747 /* SATagDebugViewController.m */; };
+		7E9A8A3255726CB68F176371 /* Pods_SATagSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC0899C7AEAF350103A75F7 /* Pods_SATagSDK.framework */; };
+		9CDBC1B82815FCF7D0C9ED3F /* Pods_SATagSDKDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 337A833580C379934C312FE5 /* Pods_SATagSDKDemo.framework */; };
+		A0807E5F30165992009B933F /* SATagSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0807E5930165992009B933F /* SATagSDK.framework */; };
+		A0807E6030165992009B933F /* SATagSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A0807E5930165992009B933F /* SATagSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A10F556B0AEA1966DDC568BD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A826BB5BEE81D14806AFCB3A /* PrivacyInfo.xcprivacy */; };
+		A2A457F60F48FF9766C28CF8 /* SATagTikTokProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = ED37FC5D2425E530D4F0B896 /* SATagTikTokProvider.m */; };
+		BA6AAE50643AA814B981C2C1 /* SATagInitializationResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 42568A0C9B59EE825E42005D /* SATagInitializationResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C53D50E1AC3160AC89C46EB7 /* SATagSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D25CA7989D41C8177AD4F2E /* SATagSDK.m */; };
+		C742E40C84096DF5A0FCAB90 /* SATagInitializationCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = F26F09D9A43A114A14366F83 /* SATagInitializationCoordinator.m */; };
+		C77B96A3FB24C638B84D592A /* SATagAppsFlyerProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7802BC3CF9BAF1C71914253A /* SATagAppsFlyerProvider.m */; };
+		D0CDA96D7BCB1489D356E005 /* SATagTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D9C8B16B22FEF9BCE07E3652 /* SATagTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E27D69C32F7372FA85C3A5B2 /* SATagFacebookProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 9535D6932B16CC1ED1E75447 /* SATagFacebookProvider.m */; };
+		F8997C8E1A5FF4C3FBF35B65 /* SATagConfigurationReader.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3A396F04060D7BB47B6C52 /* SATagConfigurationReader.m */; };
+		FADABBF312246303279A6703 /* NSString+SATagTrim.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FEA2EF5FB1E950099CFF7A0 /* NSString+SATagTrim.m */; };
+		FDAB1C04E8E4B73A6B1EE388 /* SATagEventResult.h in Headers */ = {isa = PBXBuildFile; fileRef = A25FF13ED0893FFCD7314F7D /* SATagEventResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A1B2C3D4E5F60718293A4B66 /* SATagSDKTests target proxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0807E2F3016597D009B933F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0807E5830165992009B933F;
+			remoteInfo = SATagSDK;
+		};
+		A0807E5D30165992009B933F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0807E2F3016597D009B933F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0807E5830165992009B933F;
+			remoteInfo = SATagSDK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A0807E6530165992009B933F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A0807E6030165992009B933F /* SATagSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A1B2C3D4E5F60718293A4B6C /* SATagInitializationCoordinatorTests.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagInitializationCoordinatorTests.m; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B6D /* SATagSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SATagSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F60718293A4B6E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = System/Library/Frameworks/XCTest.framework; sourceTree = SDKROOT; };
+		02BD6D1DE30B0A72BC04BE7B /* SATagFacebookProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagFacebookProvider.h; sourceTree = "<group>"; };
+		07E7D081FE92F33DE3CD51B2 /* SATagInitializationCoordinator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagInitializationCoordinator.h; sourceTree = "<group>"; };
+		1B19A6BB17E9D0B868E3421B /* SATagDebugViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagDebugViewController.m; sourceTree = "<group>"; };
+		1E78BA5FFE75EFA26791C31E /* SATagDebugViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagDebugViewController.h; sourceTree = "<group>"; };
+		1F4AC1C78B13EBD5758900C8 /* SATagTypes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagTypes.m; sourceTree = "<group>"; };
+		286C3716328D059A7B7E7DD7 /* NSString+SATagTrim.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSString+SATagTrim.m"; sourceTree = "<group>"; };
+		298683762810903E2C5F77AC /* SATagInitializationResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagInitializationResult.m; sourceTree = "<group>"; };
+		2CBE389F98B2AB45B844EFA7 /* SATagTikTokProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagTikTokProvider.h; sourceTree = "<group>"; };
+		337A833580C379934C312FE5 /* Pods_SATagSDKDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SATagSDKDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E2D3A0B7B7C6D6FBEC20A0E /* SATagEventResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagEventResult.m; sourceTree = "<group>"; };
+		3EC0899C7AEAF350103A75F7 /* Pods_SATagSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SATagSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		42568A0C9B59EE825E42005D /* SATagInitializationResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagInitializationResult.h; sourceTree = "<group>"; };
+		44E1B21ED3ABB0F25D0AA0F6 /* SATagEventResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagEventResult.m; sourceTree = "<group>"; };
+		4FFFBB01B723CDB5816371D7 /* SATagProviderAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagProviderAdapter.h; sourceTree = "<group>"; };
+		5285E5757D106E3BD6AC0997 /* SATagAppsFlyerProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagAppsFlyerProvider.h; sourceTree = "<group>"; };
+		56975BD131B425B363A99747 /* SATagDebugViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagDebugViewController.m; sourceTree = "<group>"; };
+		58BFCA4CEB6C363DD2289CA5 /* SATagConfigurationReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagConfigurationReader.h; sourceTree = "<group>"; };
+		59934E738D4689CCCF221938 /* Pods-SATagSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SATagSDK.debug.xcconfig"; path = "Target Support Files/Pods-SATagSDK/Pods-SATagSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		640755E635C846D0461E9B57 /* SATagProviderSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagProviderSupport.h; sourceTree = "<group>"; };
+		6B33F4A34539D73E6517043C /* SATagSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagSDK.h; sourceTree = "<group>"; };
+		6D25CA7989D41C8177AD4F2E /* SATagSDK.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagSDK.m; sourceTree = "<group>"; };
+		6DCACF4CB95AD4FB77FF596A /* SATagInitializationCoordinator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagInitializationCoordinator.h; sourceTree = "<group>"; };
+		7802BC3CF9BAF1C71914253A /* SATagAppsFlyerProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagAppsFlyerProvider.m; sourceTree = "<group>"; };
+		7FEA2EF5FB1E950099CFF7A0 /* NSString+SATagTrim.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSString+SATagTrim.m"; sourceTree = "<group>"; };
+		846E3D124C76B7418FA2A9B6 /* SATagProviderAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagProviderAdapter.h; sourceTree = "<group>"; };
+		9535D6932B16CC1ED1E75447 /* SATagFacebookProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagFacebookProvider.m; sourceTree = "<group>"; };
+		978395AF9AB01FCE54CADDBC /* SATagEventResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagEventResult.h; sourceTree = "<group>"; };
+		97BDCB5EBB0A222B8EEE673B /* SATagInitializationCoordinator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagInitializationCoordinator.m; sourceTree = "<group>"; };
+		989F5E1A95FF322FEE502BD5 /* SATagLifecycleHook.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagLifecycleHook.m; sourceTree = "<group>"; };
+		98A4A35112A5964C9B4D026B /* SATagConfigurationReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagConfigurationReader.m; sourceTree = "<group>"; };
+		9AFF89ED084BE9F99785B99A /* SATagAppsFlyerProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagAppsFlyerProvider.m; sourceTree = "<group>"; };
+		A0807E373016597D009B933F /* SATagSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SATagSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0807E5930165992009B933F /* SATagSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SATagSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A25FF13ED0893FFCD7314F7D /* SATagEventResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagEventResult.h; sourceTree = "<group>"; };
+		A4724C43C603575171DD90D3 /* SATagTikTokProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagTikTokProvider.m; sourceTree = "<group>"; };
+		A6485583A4A50057732FBF9E /* SATagInitializationResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagInitializationResult.m; sourceTree = "<group>"; };
+		A826BB5BEE81D14806AFCB3A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		AA6AD55D4A491949ED13A0A0 /* SATagConfigurationReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagConfigurationReader.h; sourceTree = "<group>"; };
+		AAD04E322C920CB5B2E68C0C /* SATagSDK.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagSDK.m; sourceTree = "<group>"; };
+		AEF1E5AC4D1B04F857E6B8B3 /* Pods-SATagSDKDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SATagSDKDemo.debug.xcconfig"; path = "Target Support Files/Pods-SATagSDKDemo/Pods-SATagSDKDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		AF4AD22E334F659126301753 /* SATagFacebookProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagFacebookProvider.h; sourceTree = "<group>"; };
+		AF67CF021B2BFDC50E35908C /* SATagLifecycleHook.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagLifecycleHook.m; sourceTree = "<group>"; };
+		B391EBD191C1A78277567682 /* SATagProviderSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagProviderSupport.h; sourceTree = "<group>"; };
+		B41D93E99642730C505BCBDF /* Pods-SATagSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SATagSDK.release.xcconfig"; path = "Target Support Files/Pods-SATagSDK/Pods-SATagSDK.release.xcconfig"; sourceTree = "<group>"; };
+		B6CCCE440D8CAA48D0DCDE9D /* SATagFacebookProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagFacebookProvider.m; sourceTree = "<group>"; };
+		B9D92473B5F835347D972792 /* NSString+SATagTrim.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSString+SATagTrim.h"; sourceTree = "<group>"; };
+		C00F730775A921361CE3E725 /* Pods-SATagSDKDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SATagSDKDemo.release.xcconfig"; path = "Target Support Files/Pods-SATagSDKDemo/Pods-SATagSDKDemo.release.xcconfig"; sourceTree = "<group>"; };
+		C4312BA80298BB8D3FAD5959 /* SATagTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagTypes.h; sourceTree = "<group>"; };
+		CBD54B246CD0D8155CB10093 /* SATagAppsFlyerProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagAppsFlyerProvider.h; sourceTree = "<group>"; };
+		CE3583947B10695C21B8D5E9 /* SATagSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagSDK.h; sourceTree = "<group>"; };
+		CE3A396F04060D7BB47B6C52 /* SATagConfigurationReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagConfigurationReader.m; sourceTree = "<group>"; };
+		D163589D0568AC9A628131CE /* NSString+SATagTrim.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSString+SATagTrim.h"; sourceTree = "<group>"; };
+		D9C8B16B22FEF9BCE07E3652 /* SATagTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagTypes.h; sourceTree = "<group>"; };
+		E3CB81FC870715C7E4640CF5 /* SATagLifecycleHook.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagLifecycleHook.h; sourceTree = "<group>"; };
+		E7A2B93AEC12C666428DBDBE /* SATagDebugViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagDebugViewController.h; sourceTree = "<group>"; };
+		ECFA18580BD5169833A06DB8 /* SATagInitializationResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagInitializationResult.h; sourceTree = "<group>"; };
+		ED37FC5D2425E530D4F0B896 /* SATagTikTokProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagTikTokProvider.m; sourceTree = "<group>"; };
+		F26F09D9A43A114A14366F83 /* SATagInitializationCoordinator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagInitializationCoordinator.m; sourceTree = "<group>"; };
+		F32200F448030050F268B929 /* SATagLifecycleHook.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagLifecycleHook.h; sourceTree = "<group>"; };
+		FB84E05B4D74551DB115C888 /* SATagTikTokProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagTikTokProvider.h; sourceTree = "<group>"; };
+		FE2B29A553041A1E787AFBA1 /* SATagTypes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagTypes.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A0807E4E3016597F009B933F /* Exceptions for "SATagSDKDemo" folder in "SATagSDKDemo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = A0807E363016597D009B933F /* SATagSDKDemo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A0807E393016597D009B933F /* SATagSDKDemo */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A0807E4E3016597F009B933F /* Exceptions for "SATagSDKDemo" folder in "SATagSDKDemo" target */,
+			);
+			path = SATagSDKDemo;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1B2C3D4E5F60718293A4B73 /* SATagSDKTests Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1B2C3D4E5F60718293A4B5D /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0807E343016597D009B933F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0807E5F30165992009B933F /* SATagSDK.framework in Frameworks */,
+				9CDBC1B82815FCF7D0C9ED3F /* Pods_SATagSDKDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0807E5630165992009B933F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E9A8A3255726CB68F176371 /* Pods_SATagSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1B2C3D4E5F60718293A4B71 /* SATagSDKTests */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F60718293A4B6C /* SATagInitializationCoordinatorTests.m */,
+			);
+			name = SATagSDKTests;
+			path = SATagSDKTests;
+			sourceTree = "<group>";
+		};
+		05C8B5E5565B7D46FFD4743B /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D163589D0568AC9A628131CE /* NSString+SATagTrim.h */,
+				286C3716328D059A7B7E7DD7 /* NSString+SATagTrim.m */,
+				AA6AD55D4A491949ED13A0A0 /* SATagConfigurationReader.h */,
+				98A4A35112A5964C9B4D026B /* SATagConfigurationReader.m */,
+				6DCACF4CB95AD4FB77FF596A /* SATagInitializationCoordinator.h */,
+				97BDCB5EBB0A222B8EEE673B /* SATagInitializationCoordinator.m */,
+				F32200F448030050F268B929 /* SATagLifecycleHook.h */,
+				989F5E1A95FF322FEE502BD5 /* SATagLifecycleHook.m */,
+				846E3D124C76B7418FA2A9B6 /* SATagProviderAdapter.h */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		1B31D748B8F0CA12DB1433A6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A826BB5BEE81D14806AFCB3A /* PrivacyInfo.xcprivacy */,
+			);
+			name = Resources;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		324E86A14F8D0A425A03AFA9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				978395AF9AB01FCE54CADDBC /* SATagEventResult.h */,
+				3E2D3A0B7B7C6D6FBEC20A0E /* SATagEventResult.m */,
+				ECFA18580BD5169833A06DB8 /* SATagInitializationResult.h */,
+				A6485583A4A50057732FBF9E /* SATagInitializationResult.m */,
+				C4312BA80298BB8D3FAD5959 /* SATagTypes.h */,
+				1F4AC1C78B13EBD5758900C8 /* SATagTypes.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		3FD85AB0470D4E75273659C1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1E78BA5FFE75EFA26791C31E /* SATagDebugViewController.h */,
+				1B19A6BB17E9D0B868E3421B /* SATagDebugViewController.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		6BCC22F1249D2D9191E3EFAA /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				5285E5757D106E3BD6AC0997 /* SATagAppsFlyerProvider.h */,
+				7802BC3CF9BAF1C71914253A /* SATagAppsFlyerProvider.m */,
+				AF4AD22E334F659126301753 /* SATagFacebookProvider.h */,
+				9535D6932B16CC1ED1E75447 /* SATagFacebookProvider.m */,
+				B391EBD191C1A78277567682 /* SATagProviderSupport.h */,
+				2CBE389F98B2AB45B844EFA7 /* SATagTikTokProvider.h */,
+				ED37FC5D2425E530D4F0B896 /* SATagTikTokProvider.m */,
+			);
+			name = Providers;
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		7E68A74F0FA5C6CB85F1E2E2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3EC0899C7AEAF350103A75F7 /* Pods_SATagSDK.framework */,
+				337A833580C379934C312FE5 /* Pods_SATagSDKDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A0807E2E3016597D009B933F = {
+			isa = PBXGroup;
+			children = (
+				A0807E393016597D009B933F /* SATagSDKDemo */,
+				A1B2C3D4E5F60718293A4B71 /* SATagSDKTests */,
+				A0807E383016597D009B933F /* Products */,
+				E3366B32876F6B706F8E4016 /* Pods */,
+				7E68A74F0FA5C6CB85F1E2E2 /* Frameworks */,
+				FCB9FA457361E5A7BD822CEE /* SATagSDK */,
+			);
+			sourceTree = "<group>";
+		};
+		A0807E383016597D009B933F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A0807E373016597D009B933F /* SATagSDKDemo.app */,
+				A0807E5930165992009B933F /* SATagSDK.framework */,
+				A1B2C3D4E5F60718293A4B6D /* SATagSDKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A4DB4A045C356A4C090680AA /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B9D92473B5F835347D972792 /* NSString+SATagTrim.h */,
+				7FEA2EF5FB1E950099CFF7A0 /* NSString+SATagTrim.m */,
+				58BFCA4CEB6C363DD2289CA5 /* SATagConfigurationReader.h */,
+				CE3A396F04060D7BB47B6C52 /* SATagConfigurationReader.m */,
+				07E7D081FE92F33DE3CD51B2 /* SATagInitializationCoordinator.h */,
+				F26F09D9A43A114A14366F83 /* SATagInitializationCoordinator.m */,
+				E3CB81FC870715C7E4640CF5 /* SATagLifecycleHook.h */,
+				AF67CF021B2BFDC50E35908C /* SATagLifecycleHook.m */,
+				4FFFBB01B723CDB5816371D7 /* SATagProviderAdapter.h */,
+			);
+			name = Core;
+			path = Core;
+			sourceTree = "<group>";
+		};
+		ACED23981DACE8EE8A428220 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A25FF13ED0893FFCD7314F7D /* SATagEventResult.h */,
+				44E1B21ED3ABB0F25D0AA0F6 /* SATagEventResult.m */,
+				42568A0C9B59EE825E42005D /* SATagInitializationResult.h */,
+				298683762810903E2C5F77AC /* SATagInitializationResult.m */,
+				D9C8B16B22FEF9BCE07E3652 /* SATagTypes.h */,
+				FE2B29A553041A1E787AFBA1 /* SATagTypes.m */,
+			);
+			name = Models;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B5E8EB7374B0BC040FF76318 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E7A2B93AEC12C666428DBDBE /* SATagDebugViewController.h */,
+				56975BD131B425B363A99747 /* SATagDebugViewController.m */,
+			);
+			name = Views;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CE0A9C520A5DC007481D559F /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				CBD54B246CD0D8155CB10093 /* SATagAppsFlyerProvider.h */,
+				9AFF89ED084BE9F99785B99A /* SATagAppsFlyerProvider.m */,
+				02BD6D1DE30B0A72BC04BE7B /* SATagFacebookProvider.h */,
+				B6CCCE440D8CAA48D0DCDE9D /* SATagFacebookProvider.m */,
+				640755E635C846D0461E9B57 /* SATagProviderSupport.h */,
+				FB84E05B4D74551DB115C888 /* SATagTikTokProvider.h */,
+				A4724C43C603575171DD90D3 /* SATagTikTokProvider.m */,
+			);
+			name = Providers;
+			sourceTree = "<group>";
+		};
+		E3366B32876F6B706F8E4016 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				59934E738D4689CCCF221938 /* Pods-SATagSDK.debug.xcconfig */,
+				B41D93E99642730C505BCBDF /* Pods-SATagSDK.release.xcconfig */,
+				AEF1E5AC4D1B04F857E6B8B3 /* Pods-SATagSDKDemo.debug.xcconfig */,
+				C00F730775A921361CE3E725 /* Pods-SATagSDKDemo.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FCB9FA457361E5A7BD822CEE /* SATagSDK */ = {
+			isa = PBXGroup;
+			children = (
+				A4DB4A045C356A4C090680AA /* Core */,
+				ACED23981DACE8EE8A428220 /* Models */,
+				6BCC22F1249D2D9191E3EFAA /* Providers */,
+				CE3583947B10695C21B8D5E9 /* SATagSDK.h */,
+				6D25CA7989D41C8177AD4F2E /* SATagSDK.m */,
+				B5E8EB7374B0BC040FF76318 /* Views */,
+				1B31D748B8F0CA12DB1433A6 /* Resources */,
+			);
+			name = SATagSDK;
+			path = SATagSDK;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A0807E5430165992009B933F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7197F4B79EB49051AAAC8E6A /* SATagSDK.h in Headers */,
+				D0CDA96D7BCB1489D356E005 /* SATagTypes.h in Headers */,
+				BA6AAE50643AA814B981C2C1 /* SATagInitializationResult.h in Headers */,
+				FDAB1C04E8E4B73A6B1EE388 /* SATagEventResult.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1B2C3D4E5F60718293A4B74 /* SATagSDKTests Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1B2C3D4E5F60718293A4B72 /* SATagSDKTests Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1B2C3D4E5F60718293A4B5C /* SATagInitializationCoordinatorTests.m in Sources */,
+				A1B2C3D4E5F60718293A4B80 /* SATagInitializationCoordinator.m in Tests */,
+				A1B2C3D4E5F60718293A4B81 /* SATagConfigurationReader.m in Tests */,
+				A1B2C3D4E5F60718293A4B82 /* NSString+SATagTrim.m in Tests */,
+				A1B2C3D4E5F60718293A4B83 /* SATagTypes.m in Tests */,
+				A1B2C3D4E5F60718293A4B84 /* SATagInitializationResult.m in Tests */,
+				A1B2C3D4E5F60718293A4B85 /* SATagEventResult.m in Tests */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		A1B2C3D4E5F60718293A4B75 /* SATagSDKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1B2C3D4E5F60718293A4B78 /* Build configuration list for PBXNativeTarget "SATagSDKTests" */;
+			buildPhases = (
+				A1B2C3D4E5F60718293A4B72 /* SATagSDKTests Sources */,
+				A1B2C3D4E5F60718293A4B73 /* SATagSDKTests Frameworks */,
+				A1B2C3D4E5F60718293A4B74 /* SATagSDKTests Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SATagSDKTests;
+			productName = SATagSDKTests;
+			productReference = A1B2C3D4E5F60718293A4B6D /* SATagSDKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A0807E363016597D009B933F /* SATagSDKDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0807E4F3016597F009B933F /* Build configuration list for PBXNativeTarget "SATagSDKDemo" */;
+			buildPhases = (
+				10165DAEF455E5E7BB047DA8 /* [CP] Check Pods Manifest.lock */,
+				A0807E333016597D009B933F /* Sources */,
+				A0807E343016597D009B933F /* Frameworks */,
+				A0807E353016597D009B933F /* Resources */,
+				A0807E6530165992009B933F /* Embed Frameworks */,
+				407D0B3B1E9F80800E05497F /* [CP] Embed Pods Frameworks */,
+				C62D22438B26CEA92E913437 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A0807E5E30165992009B933F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A0807E393016597D009B933F /* SATagSDKDemo */,
+			);
+			name = SATagSDKDemo;
+			productName = SATagSDKDemo;
+			productReference = A0807E373016597D009B933F /* SATagSDKDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A0807E5830165992009B933F /* SATagSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0807E6130165992009B933F /* Build configuration list for PBXNativeTarget "SATagSDK" */;
+			buildPhases = (
+				09222BD5DFE7F6022D7D7399 /* [CP] Check Pods Manifest.lock */,
+				A0807E5430165992009B933F /* Headers */,
+				A0807E5530165992009B933F /* Sources */,
+				A0807E5630165992009B933F /* Frameworks */,
+				A0807E5730165992009B933F /* Resources */,
+				7D29F8AACEE505DCB1E343E4 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SATagSDK;
+			productName = SATagSDK;
+			productReference = A0807E5930165992009B933F /* SATagSDK.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A0807E2F3016597D009B933F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					A0807E363016597D009B933F = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					A0807E5830165992009B933F = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					A1B2C3D4E5F60718293A4B75 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = A0807E323016597D009B933F /* Build configuration list for PBXProject "SATagSDKDemo" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A0807E2E3016597D009B933F;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A0807E383016597D009B933F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A0807E363016597D009B933F /* SATagSDKDemo */,
+				A0807E5830165992009B933F /* SATagSDK */,
+				F2BE27CCA9FE4D91BEBDDF27 /* BuildSATagSDKXCFramework */,
+				A1B2C3D4E5F60718293A4B75 /* SATagSDKTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A0807E353016597D009B933F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0807E5730165992009B933F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10F556B0AEA1966DDC568BD /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C5958116FC5B4C3A89EAD8A1 /* Build SATagSDK XCFramework */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Scripts/BuildSATagSDKXCFramework.sh",
+			);
+			name = "Build SATagSDK XCFramework";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "\"${SRCROOT}/Scripts/BuildSATagSDKXCFramework.sh\"\n";
+			showEnvVarsInLog = 1;
+		};
+		09222BD5DFE7F6022D7D7399 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SATagSDK-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		10165DAEF455E5E7BB047DA8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SATagSDKDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		407D0B3B1E9F80800E05497F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SATagSDKDemo/Pods-SATagSDKDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SATagSDKDemo/Pods-SATagSDKDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SATagSDKDemo/Pods-SATagSDKDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D29F8AACEE505DCB1E343E4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SATagSDK/Pods-SATagSDK-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SATagSDK/Pods-SATagSDK-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SATagSDK/Pods-SATagSDK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C62D22438B26CEA92E913437 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SATagSDKDemo/Pods-SATagSDKDemo-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SATagSDKDemo/Pods-SATagSDKDemo-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SATagSDKDemo/Pods-SATagSDKDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A0807E333016597D009B933F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0807E5530165992009B933F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FADABBF312246303279A6703 /* NSString+SATagTrim.m in Sources */,
+				F8997C8E1A5FF4C3FBF35B65 /* SATagConfigurationReader.m in Sources */,
+				C742E40C84096DF5A0FCAB90 /* SATagInitializationCoordinator.m in Sources */,
+				2E92E06E61504DF7CCACEC68 /* SATagLifecycleHook.m in Sources */,
+				37E4AB6A14F3195ACD536133 /* SATagEventResult.m in Sources */,
+				389192C199879C57AA0388DF /* SATagInitializationResult.m in Sources */,
+				395F993B73F235C1F1E48363 /* SATagTypes.m in Sources */,
+				C77B96A3FB24C638B84D592A /* SATagAppsFlyerProvider.m in Sources */,
+				E27D69C32F7372FA85C3A5B2 /* SATagFacebookProvider.m in Sources */,
+				A2A457F60F48FF9766C28CF8 /* SATagTikTokProvider.m in Sources */,
+				C53D50E1AC3160AC89C46EB7 /* SATagSDK.m in Sources */,
+				7C2CF3B669258996B23E9A1A /* SATagDebugViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A1B2C3D4E5F60718293A4B77 /* SATagSDKTests depends on SATagSDK */ = {
+			isa = PBXTargetDependency;
+			target = A0807E5830165992009B933F /* SATagSDK */;
+			targetProxy = A1B2C3D4E5F60718293A4B66 /* SATagSDKTests target proxy */;
+		};
+		A0807E5E30165992009B933F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0807E5830165992009B933F /* SATagSDK */;
+			targetProxy = A0807E5D30165992009B933F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A1B2C3D4E5F60718293A4B79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.starfortune.llbook.SATagSDKTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A1B2C3D4E5F60718293A4B7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.starfortune.llbook.SATagSDKTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A0807E503016597F009B933F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AEF1E5AC4D1B04F857E6B8B3 /* Pods-SATagSDKDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4SVXCZ96LP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SATagSDKDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.starfortune.llbook.SATagSDKDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_VERSION = 6.0;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A0807E513016597F009B933F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C00F730775A921361CE3E725 /* Pods-SATagSDKDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4SVXCZ96LP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SATagSDKDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.starfortune.llbook.SATagSDKDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_VERSION = 6.0;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A0807E523016597F009B933F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 4SVXCZ96LP;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A0807E533016597F009B933F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 4SVXCZ96LP;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A0807E6230165992009B933F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59934E738D4689CCCF221938 /* Pods-SATagSDK.debug.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 4SVXCZ96LP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.starfortune.llbook.SATagSDK;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = NO;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A0807E6330165992009B933F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B41D93E99642730C505BCBDF /* Pods-SATagSDK.release.xcconfig */;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 4SVXCZ96LP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.starfortune.llbook.SATagSDK;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = NO;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BC3AC96575CE4E33A2F7E140 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+			};
+			name = Debug;
+		};
+		285CCC3B49B64EA18EA72916 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1B2C3D4E5F60718293A4B78 /* Build configuration list for PBXNativeTarget "SATagSDKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3D4E5F60718293A4B79 /* Debug */,
+				A1B2C3D4E5F60718293A4B7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0807E323016597D009B933F /* Build configuration list for PBXProject "SATagSDKDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0807E523016597F009B933F /* Debug */,
+				A0807E533016597F009B933F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0807E4F3016597F009B933F /* Build configuration list for PBXNativeTarget "SATagSDKDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0807E503016597F009B933F /* Debug */,
+				A0807E513016597F009B933F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0807E6130165992009B933F /* Build configuration list for PBXNativeTarget "SATagSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0807E6230165992009B933F /* Debug */,
+				A0807E6330165992009B933F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8425609622984971ACB39E1C /* Build configuration list for PBXAggregateTarget "BuildSATagSDKXCFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC3AC96575CE4E33A2F7E140 /* Debug */,
+				285CCC3B49B64EA18EA72916 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A0807E2F3016597D009B933F /* Project object */;
+}

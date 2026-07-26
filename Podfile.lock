@@ -1,0 +1,35 @@
+PODS:
+  - AppsFlyerFramework (7.0.1):
+    - AppsFlyerFramework/Main (= 7.0.1)
+  - AppsFlyerFramework/Main (7.0.1)
+  - FBAEMKit (18.0.1):
+    - FBSDKCoreKit_Basics (= 18.0.1)
+  - FBSDKCoreKit (18.0.1):
+    - FBAEMKit (= 18.0.1)
+    - FBSDKCoreKit_Basics (= 18.0.1)
+  - FBSDKCoreKit_Basics (18.0.1)
+  - TikTokBusinessSDK (1.7.1)
+
+DEPENDENCIES:
+  - AppsFlyerFramework (= 7.0.1)
+  - FBSDKCoreKit (= 18.0.1)
+  - TikTokBusinessSDK (= 1.7.1)
+
+SPEC REPOS:
+  trunk:
+    - AppsFlyerFramework
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - TikTokBusinessSDK
+
+SPEC CHECKSUMS:
+  AppsFlyerFramework: 5fbe1765e5cf2a6b6ee4d170e6992881ce3c251f
+  FBAEMKit: b2ed182002dbcb65d5a60059c9693d322186cd00
+  FBSDKCoreKit: 7f96852f2539bdb88ba8d47e5ab4ae70a6f8d691
+  FBSDKCoreKit_Basics: 22d4c1a509ded4e45116f3bb167a14907550f62e
+  TikTokBusinessSDK: c725de7374647343eef570a23ca7ce1ec8ab833c
+
+PODFILE CHECKSUM: 2992c1d769480a511a2801cdf6508bf36e5dada9
+
+COCOAPODS: 1.16.2
