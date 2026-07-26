@@ -1,5 +1,7 @@
 # SATagSDK
 
+完整接入说明请查看：[SATagSDK-Integration.md](SATagSDK-Integration.md)
+
 ## CocoaPods
 
 完整集成：
