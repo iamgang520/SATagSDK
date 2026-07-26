@@ -370,10 +370,27 @@ pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'TikTok']</code></pre>
         <p>不使用 CocoaPods 时，直接使用 SDK 发布方提供的单包发布物。接入方不需要获取 SATagSDK 源码工程，也不需要执行 SDK 构建脚本。</p>
         <p>请向 SDK 发布方获取对应版本的 ZIP，例如：</p>
         <pre><code>SATagSDK-1.0.0.zip</code></pre>
-        <p>ZIP 根目录只有以下文件：</p>
-        <pre><code>SATagSDK.xcframework
-SATagSDK-Integration.html
-SATagSDK-Integration.md</code></pre>
+        <p>解压后，ZIP 根目录包含以下文件：</p>
+        <table>
+          <thead><tr><th>文件</th><th>用途</th><th>谁需要使用</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>SATagSDK.xcframework</code></td>
+              <td>实际接入宿主 App 的 SDK 二进制包，拖入 Xcode 工程使用。</td>
+              <td>开发人员</td>
+            </tr>
+            <tr>
+              <td><code>SATagSDK-Integration.html</code></td>
+              <td>当前这份可视化接入说明，可直接用浏览器打开，查看集成步骤、配置和代码示例。</td>
+              <td>开发人员</td>
+            </tr>
+            <tr>
+              <td><code>SATagSDK-Integration.md</code></td>
+              <td>结构化接入规范，供大模型、代码助手或自动化接入工具读取和执行。开发人员通常不需要直接阅读。</td>
+              <td>大模型、代码助手</td>
+            </tr>
+          </tbody>
+        </table>
         <ol>
           <li>解压 ZIP。</li>
           <li>将 <code>SATagSDK.xcframework</code> 拖入宿主工程。</li>

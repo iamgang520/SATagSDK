@@ -96,14 +96,13 @@ SATagSDK.sharedInstance().initialize(
 SATagSDK-{version}.zip
 ```
 
-压缩包内只有：
+压缩包包含以下文件：
 
-```text
-SATagSDK.xcframework
-SATagSDK-Integration.html
-SATagSDK-Integration.md
-```
+| 文件 | 用途 |
+| --- | --- |
+| `SATagSDK.xcframework` | 开发人员拖入宿主工程使用的 SDK 二进制包，已包含三方渠道依赖和隐私资源。 |
+| `SATagSDK-Integration.html` | 开发人员使用浏览器打开的可视化接入说明。 |
+| `SATagSDK-Integration.md` | 给大模型、代码助手或自动化接入工具读取的结构化接入规范。 |
 
-其中 `SATagSDK.xcframework` 已包含 AppsFlyer、Facebook、TikTok 的二进制依赖
-和隐私资源；直接集成这个 XCFramework 时不需要再单独添加三方 SDK。开发人员
-请阅读 HTML 接入页，大模型请读取 Markdown 接入规范。
+直接集成 XCFramework 时不需要再单独添加三方 SDK。开发人员阅读 HTML，
+大模型或代码助手读取 Markdown。

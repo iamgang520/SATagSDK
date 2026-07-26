@@ -80,13 +80,15 @@ pod 'SATagSDK', :subspecs => ['AppsFlyer', 'TikTok']
 
 如果发布包不存在，应向 SDK 发布方索取对应版本的 ZIP，而不是要求业务开发人员修改或构建 SATagSDK 源码。
 
-ZIP 顶层必须只有以下三项：
+解压后，ZIP 根目录包含以下文件：
 
-```text
-SATagSDK.xcframework
-SATagSDK-Integration.html
-SATagSDK-Integration.md
-```
+| 文件 | 用途 | 使用者 |
+| --- | --- | --- |
+| `SATagSDK.xcframework` | 实际拖入宿主 App 工程的 SDK 二进制包。 | 开发人员 |
+| `SATagSDK-Integration.html` | 可直接用浏览器打开的可视化接入说明，包含集成步骤、配置和代码示例。 | 开发人员 |
+| `SATagSDK-Integration.md` | 结构化接入规范，供大模型、代码助手或自动化接入工具读取和执行。开发人员通常不需要直接阅读。 | 大模型、代码助手 |
+
+大模型或代码助手处理接入任务时，应读取 `SATagSDK-Integration.md`；开发人员查看接入步骤时，应打开 `SATagSDK-Integration.html`。两个文档都不要求接入方获取 SATagSDK 源码工程。
 
 将 ZIP 中的 `SATagSDK.xcframework` 添加到宿主 Target 的 `Frameworks, Libraries, and Embedded Content`。Swift 工程使用：
 
@@ -359,7 +361,7 @@ DebugView 展示：
 - [ ] 不输出完整敏感配置。
 - [ ] XCFramework 集成时没有重复添加三方 SDK。
 - [ ] 使用的是 SDK 发布方提供的 `SATagSDK-{version}.zip`，没有要求接入方构建 SATagSDK 源码。
-- [ ] ZIP 顶层只有 `SATagSDK.xcframework`、`SATagSDK-Integration.html`、`SATagSDK-Integration.md`。
+- [ ] ZIP 根目录包含 `SATagSDK.xcframework`、`SATagSDK-Integration.html`、`SATagSDK-Integration.md`，并且每个文件用途明确。
 
 ## 10. 禁止推断的内容
 
