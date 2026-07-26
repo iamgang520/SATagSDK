@@ -1,82 +1,118 @@
-# SATagSDK 接入说明
+# SATagSDK 接入规范（供大模型执行）
 
-SATagSDK 是一个基于 Objective-C 实现的聚合打点 SDK，统一封装以下渠道：
+> 本文件是 SATagSDK 的机器接入规范，不是营销文档。大模型接入项目时必须优先遵守本文件中的“硬性规则”和“决策流程”，不得根据未列出的配置键、方法名或第三方 SDK 版本自行推断。
 
-- AppsFlyer
-- Facebook
-- TikTok
+## 1. 规范元数据
 
-公开头文件兼容 Objective-C 和 Swift，Swift 工程可以直接导入模块调用，不需要额外编写 Swift 包装层。
+```yaml
+sdk_name: SATagSDK
+sdk_version: 1.0.0
+implementation_language: Objective-C
+swift_interop: Objective-C module import, no Swift wrapper required
+minimum_ios_version: "13.0"
+required_provider: AppsFlyer
+optional_providers:
+  - Facebook
+  - TikTok
+developer_document: SATagSDK-Integration.html
+```
 
-## 1. 环境要求
+## 2. 硬性规则
 
-- iOS 13.0 及以上
-- Xcode 及 CocoaPods
-- AppsFlyer 为必接渠道
-- Facebook 和 TikTok 为可选渠道
+1. AppsFlyer 是必接渠道。
+2. AppsFlyer 初始化参数必须通过公开初始化接口传入，不能只写入 `Info.plist`。
+3. AppsFlyer 的 `devKey` 和 `appleAppID` 必须同时存在且不能是空白字符。
+4. AppsFlyer 参数不完整时，SATagSDK 不初始化任何渠道，也不安装生命周期 Hook。
+5. Facebook 和 TikTok 只有在对应依赖已经集成且配置完整时才允许初始化。
+6. 事件接口不会抛异常；必须读取结果对象判断每个渠道的状态。
+7. 不要在宿主 App 中重复调用第三方 SDK 的初始化入口；由 SATagSDK 负责调用。
+8. 不要把完整 Key、Token 或 App ID 输出到日志、工单或用户界面。
+9. Swift 工程直接 `import SATagSDK`，不需要创建桥接层或 Swift 包装类。
+10. 接入完成后必须执行“验收清单”，不能只根据编译成功判断接入成功。
 
-AppsFlyer 的 `devKey` 和 `appleAppID` 必须通过 SATagSDK 初始化接口传入。Facebook 和 TikTok 的配置通过宿主 App 的 `Info.plist` 提供。
+## 3. 集成方式选择
 
-## 2. CocoaPods 集成
+### 3.1 优先选择 CocoaPods
 
-### 2.1 集成全部渠道
+适用条件：宿主工程使用 CocoaPods，并且允许通过 subspec 选择三方渠道。
 
-在 `Podfile` 中添加：
+完整集成：
 
 ```ruby
-target 'YourApp' do
-  pod 'SATagSDK', '~> 1.0'
-end
+pod 'SATagSDK', '~> 1.0'
 ```
 
-默认会集成：
-
-- `SATagSDK/Core`
-- `SATagSDK/AppsFlyer`
-- `SATagSDK/Facebook`
-- `SATagSDK/TikTok`
-
-执行安装：
-
-```bash
-pod install
-```
-
-以后请使用生成的 `.xcworkspace` 打开工程。
-
-### 2.2 按需选择渠道
-
-例如只接入 AppsFlyer 和 Facebook：
+只集成 AppsFlyer 和 Facebook：
 
 ```ruby
-target 'YourApp' do
-  pod 'SATagSDK', :subspecs => ['AppsFlyer', 'Facebook']
-end
+pod 'SATagSDK', :subspecs => ['AppsFlyer', 'Facebook']
 ```
 
-只接入 AppsFlyer：
+只集成 AppsFlyer：
 
 ```ruby
-target 'YourApp' do
-  pod 'SATagSDK', :subspecs => ['AppsFlyer']
-end
+pod 'SATagSDK', :subspecs => ['AppsFlyer']
 ```
 
-只接入 AppsFlyer 和 TikTok：
+只集成 AppsFlyer 和 TikTok：
 
 ```ruby
-target 'YourApp' do
-  pod 'SATagSDK', :subspecs => ['AppsFlyer', 'TikTok']
-end
+pod 'SATagSDK', :subspecs => ['AppsFlyer', 'TikTok']
 ```
 
-`AppsFlyer` subspec 必须保留。没有 AppsFlyer subspec 时，即使传入了 AppsFlyer 参数，SATagSDK 也会返回“未集成”或初始化失败结果。
+规则：
 
-## 3. Info.plist 配置
+- `AppsFlyer` subspec 必须存在。
+- `Facebook` 和 `TikTok` subspec 可以省略。
+- `pod 'SATagSDK'` 默认等价于集成 `Core + AppsFlyer + Facebook + TikTok`。
+- 执行 `pod install` 后，必须使用 `.xcworkspace` 打开工程。
 
-### 3.1 Facebook
+### 3.2 使用已交付的 XCFramework 发布包
 
-选择 `Facebook` subspec 后，建议在宿主 App 的 `Info.plist` 中添加：
+适用条件：宿主工程不使用 CocoaPods，或需要单包交付。
+
+接入方只需要从 SDK 发布方获取已经生成的 `SATagSDK-1.0.0.zip`。接入方不需要：
+
+- 获取 SATagSDK 源码工程。
+- 获取或打开 SATagSDKDemo 工程。
+- 执行 SATagSDK 的构建脚本。
+- 自行编译 AppsFlyer、Facebook 或 TikTok 依赖。
+
+如果发布包不存在，应向 SDK 发布方索取对应版本的 ZIP，而不是要求业务开发人员修改或构建 SATagSDK 源码。
+
+ZIP 顶层必须只有以下三项：
+
+```text
+SATagSDK.xcframework
+SATagSDK-Integration.html
+SATagSDK-Integration.md
+```
+
+将 ZIP 中的 `SATagSDK.xcframework` 添加到宿主 Target 的 `Frameworks, Libraries, and Embedded Content`。Swift 工程使用：
+
+```swift
+import SATagSDK
+```
+
+Objective-C 工程使用：
+
+```objc
+#import <SATagSDK/SATagSDK.h>
+```
+
+XCFramework 已包含构建时使用的 AppsFlyer、Facebook、TikTok 二进制依赖，不要在同一个宿主工程中再次添加这些渠道的 CocoaPods 依赖。
+
+## 4. 渠道与配置矩阵
+
+| 渠道 | 是否必接 | 依赖来源 | 配置来源 | 初始化必要配置 |
+| --- | --- | --- | --- | --- |
+| AppsFlyer | 是 | `SATagSDK/AppsFlyer` 或完整 XCFramework | 初始化接口 | `devKey`、`appleAppID` |
+| Facebook | 否 | `SATagSDK/Facebook` 或完整 XCFramework | `Info.plist` | `FacebookAppID` |
+| TikTok | 否 | `SATagSDK/TikTok` 或完整 XCFramework | `Info.plist` | `TikTokAccessToken`、`TikTokAppID`、`TikTokTTAppID` |
+
+### 4.1 Facebook Info.plist
+
+推荐配置：
 
 ```xml
 <key>FacebookAppID</key>
@@ -87,17 +123,15 @@ end
 <string>Your App Name</string>
 ```
 
-SATagSDK 会读取以下键：
+SATagSDK 读取的键：
 
-| 键名 | 说明 |
-| --- | --- |
-| `FacebookAppID` | Facebook App ID，初始化必需 |
-| `FacebookClientToken` | Facebook Client Token |
-| `FacebookDisplayName` | Facebook 展示名称 |
+- `FacebookAppID`：初始化必需。
+- `FacebookClientToken`：建议配置。
+- `FacebookDisplayName`：建议配置。
 
-### 3.2 TikTok
+### 4.2 TikTok Info.plist
 
-选择 `TikTok` subspec 后，在 `Info.plist` 中添加：
+标准配置：
 
 ```xml
 <key>TikTokAccessToken</key>
@@ -108,56 +142,40 @@ SATagSDK 会读取以下键：
 <string>YOUR_TIKTOK_TT_APP_ID</string>
 ```
 
-TikTok 也兼容以下别名：
+兼容别名：
 
-- `TikTokBusinessAccessToken`
-- `TikTokBusinessAppID`
-- `TikTokBusinessTTAppID`
+- `TikTokBusinessAccessToken` 等价于 `TikTokAccessToken`。
+- `TikTokBusinessAppID` 等价于 `TikTokAppID`。
+- `TikTokBusinessTTAppID` 等价于 `TikTokTTAppID`。
 
-TikTok 初始化要求访问令牌、App ID 和 TT App ID 三项配置都存在。
+不要同时使用同一配置的多个别名；优先使用标准键名。
 
-### 3.3 AppsFlyer
+## 5. 初始化流程
 
-AppsFlyer 参数不由 SATagSDK 从 `Info.plist` 读取，必须通过初始化接口传入：
-
-- `devKey`
-- `appleAppID`
-
-## 4. 初始化
-
-建议在 App 启动阶段调用初始化接口。SATagSDK 会自动通过运行时 Hook 接管 App 生命周期，并保留宿主 `AppDelegate` 原有实现。
-
-### 4.1 Objective-C
+### 5.1 Objective-C 标准调用
 
 ```objc
 #import <SATagSDK/SATagSDK.h>
 
-- (BOOL)application:(UIApplication *)application
-    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [[SATagSDK sharedInstance]
-        initializeWithAppsFlyerDevKey:@"YOUR_APPSFLYER_DEV_KEY"
-                            appleAppID:@"YOUR_APPLE_APP_ID"
-                            completion:^(NSArray<SATagInitializationResult *> *results) {
-        for (SATagInitializationResult *result in results) {
-            NSLog(@"渠道：%@，状态：%ld，原因：%@",
-                  result.providerName,
-                  (long)result.state,
-                  result.reason);
-        }
-    }];
-
-    return YES;
-}
+[[SATagSDK sharedInstance]
+    initializeWithAppsFlyerDevKey:@"YOUR_APPSFLYER_DEV_KEY"
+                        appleAppID:@"YOUR_APPLE_APP_ID"
+                        completion:^(NSArray<SATagInitializationResult *> *results) {
+    for (SATagInitializationResult *result in results) {
+        NSLog(@"%@ state=%ld reason=%@",
+              result.providerName,
+              (long)result.state,
+              result.reason);
+    }
+}];
 ```
 
-### 4.2 Swift
+### 5.2 Swift 标准调用
 
 ```swift
 import SATagSDK
 
-let sdk = SATagSDK.sharedInstance()
-
-sdk.initialize(
+SATagSDK.sharedInstance().initialize(
     withAppsFlyerDevKey: "YOUR_APPSFLYER_DEV_KEY",
     appleAppID: "YOUR_APPLE_APP_ID"
 ) { results in
@@ -167,53 +185,52 @@ sdk.initialize(
 }
 ```
 
-### 4.3 AppsFlyer 必接规则
+### 5.3 初始化决策算法
 
-以下任一情况成立时，SATagSDK 不会初始化任何渠道：
+大模型生成接入代码时，必须按以下顺序处理：
 
-- `devKey` 为空
-- `appleAppID` 为空
-- 参数只有空白字符
+1. 从项目安全配置或构建配置取得 AppsFlyer `devKey`。
+2. 从项目安全配置或构建配置取得 AppsFlyer `appleAppID`。
+3. 通过 `initialize(withAppsFlyerDevKey:appleAppID:completion:)` 传入两个值。
+4. 如果任一值为空或只包含空白字符，不得调用任何 Facebook/TikTok 初始化代码。
+5. 在 completion 中遍历全部 `SATagInitializationResult`。
+6. 只有 `state` 为 `SATagInitializationStateInitialized` 或 `SATagInitializationStateAlreadyInitialized` 时，才把该渠道标记为可打点。
 
-此时：
+补齐 AppsFlyer 参数后，允许再次调用初始化接口。重复初始化已成功渠道时返回 `SATagInitializationStateAlreadyInitialized`。
 
-- AppsFlyer 返回 `SATagInitializationStateMissingConfiguration`
-- Facebook/TikTok 返回跳过初始化的失败结果
-- 生命周期 Hook 不会安装
-- 补齐 AppsFlyer 参数后可以再次调用初始化接口
+### 5.4 生命周期行为
 
-初始化结果只代表本地 SDK 初始化调用是否完成，不代表第三方服务端网络请求已经成功。
+- SATagSDK 在 AppsFlyer 参数有效后自动安装 App 生命周期 Hook。
+- Hook 会保留宿主 `AppDelegate` 的原始实现。
+- Hook 触发时会补偿执行一次渠道初始化。
+- 宿主不需要为了 SATagSDK 修改或替换 `AppDelegate` 原有逻辑。
 
-## 5. 初始化状态
+## 6. 初始化结果协议
 
-`SATagInitializationResult.state` 使用 `SATagInitializationState` 枚举：
+`SATagInitializationResult` 字段：
 
-| 状态 | 含义 |
+| 字段 | 类型 | 用途 |
+| --- | --- | --- |
+| `provider` | `SATagProvider` | 渠道枚举 |
+| `providerName` | `NSString *` / `String` | 渠道显示名称 |
+| `state` | `SATagInitializationState` | 初始化状态 |
+| `reason` | `NSString *` / `String` | 状态原因 |
+| `configurationSummary` | `NSDictionary<NSString *, NSString *> *` / `[String: String]` | 脱敏配置摘要 |
+| `timestamp` | `NSDate *` / `Date` | 结果时间 |
+
+`SATagInitializationState`：
+
+| 枚举值 | 处理要求 |
 | --- | --- |
-| `SATagInitializationStateInitialized` | 已完成本地初始化调用 |
-| `SATagInitializationStateMissingConfiguration` | 必要配置缺失 |
-| `SATagInitializationStateNotIntegrated` | 当前工程没有集成对应第三方 SDK |
-| `SATagInitializationStateFailed` | 初始化过程失败或被必接渠道规则跳过 |
-| `SATagInitializationStateAlreadyInitialized` | 该渠道已经初始化过 |
+| `Initialized` | 允许向该渠道打点 |
+| `MissingConfiguration` | 修复必需配置后重新初始化 |
+| `NotIntegrated` | 添加对应 CocoaPods subspec 或改用完整 XCFramework |
+| `Failed` | 记录 `reason`，不要让异常中断宿主 App |
+| `AlreadyInitialized` | 允许继续打点，不要重复初始化 |
 
-可通过以下属性查看结果：
+## 7. 事件接口
 
-```objc
-result.provider
-result.providerName
-result.state
-result.reason
-result.configurationSummary
-result.timestamp
-```
-
-`configurationSummary` 只包含脱敏后的配置值，不会返回完整 Key、Token 或 ID。
-
-## 6. 事件打点
-
-事件参数使用 `NSDictionary<NSString *, id> *`，Swift 中对应 `[String: Any]`。
-
-### 6.1 统一广播到所有渠道
+### 7.1 统一事件
 
 Objective-C：
 
@@ -226,13 +243,13 @@ Objective-C：
             @"currency": @"CNY"
         }
         completion:^(NSArray<SATagEventResult *> *results) {
-        for (SATagEventResult *result in results) {
-            NSLog(@"%@：%ld，%@",
-                  result.providerName,
-                  (long)result.state,
-                  result.reason);
-        }
-    }];
+    for (SATagEventResult *result in results) {
+        NSLog(@"%@ state=%ld reason=%@",
+              result.providerName,
+              (long)result.state,
+              result.reason);
+    }
+}];
 ```
 
 Swift：
@@ -252,85 +269,61 @@ SATagSDK.sharedInstance().track(
 }
 ```
 
-未集成或未初始化的渠道只会在自己的结果中返回失败状态，不会阻断其它已初始化渠道。
+### 7.2 单渠道事件
 
-### 6.2 单独向指定渠道打点
-
-Objective-C：
+Objective-C 方法：
 
 ```objc
-[[SATagSDK sharedInstance]
-    trackAppsFlyerEvent:@"login"
-              parameters:@{@"source": @"email"}
-              completion:^(SATagEventResult *result) {
-        NSLog(@"AppsFlyer：%@", result.reason);
-    }];
+- (void)trackAppsFlyerEvent:(NSString *)eventName
+                 parameters:(NSDictionary<NSString *, id> *)parameters
+                 completion:(void (^)(SATagEventResult *result))completion;
 
-[[SATagSDK sharedInstance]
-    trackFacebookEvent:@"login"
-             parameters:@{@"source": @"email"}
-             completion:^(SATagEventResult *result) {
-        NSLog(@"Facebook：%@", result.reason);
-    }];
+- (void)trackFacebookEvent:(NSString *)eventName
+                parameters:(NSDictionary<NSString *, id> *)parameters
+                completion:(void (^)(SATagEventResult *result))completion;
 
-[[SATagSDK sharedInstance]
-    trackTikTokEvent:@"login"
-           parameters:@{@"source": @"email"}
-           completion:^(SATagEventResult *result) {
-        NSLog(@"TikTok：%@", result.reason);
-    }];
+- (void)trackTikTokEvent:(NSString *)eventName
+              parameters:(NSDictionary<NSString *, id> *)parameters
+              completion:(void (^)(SATagEventResult *result))completion;
 ```
 
-Swift：
+Swift 方法名：
 
 ```swift
-let parameters = ["source": "email"]
-
-SATagSDK.sharedInstance().trackAppsFlyer(
-    event: "login",
-    parameters: parameters
-) { result in
-    print(result.reason)
-}
-
-SATagSDK.sharedInstance().trackFacebook(
-    event: "login",
-    parameters: parameters
-) { result in
-    print(result.reason)
-}
-
-SATagSDK.sharedInstance().trackTikTok(
-    event: "login",
-    parameters: parameters
-) { result in
-    print(result.reason)
-}
+trackAppsFlyer(event:parameters:completion:)
+trackFacebook(event:parameters:completion:)
+trackTikTok(event:parameters:completion:)
 ```
 
-### 6.3 事件状态
+### 7.3 事件结果协议
 
-`SATagEventResult.state` 使用 `SATagEventState` 枚举：
+`SATagEventResult` 字段：
 
-| 状态 | 含义 |
+- `provider`
+- `providerName`
+- `state`
+- `eventName`
+- `reason`
+- `timestamp`
+
+`SATagEventState`：
+
+| 枚举值 | 处理要求 |
 | --- | --- |
-| `SATagEventStateAccepted` | 已调用对应第三方 SDK 的事件接口 |
-| `SATagEventStateNotInitialized` | 该渠道尚未完成初始化 |
-| `SATagEventStateNotIntegrated` | 当前工程没有集成对应第三方 SDK |
-| `SATagEventStateFailed` | 第三方 SDK 调用失败 |
-| `SATagEventStateInvalidEvent` | 事件名为空 |
+| `Accepted` | 已调用第三方 SDK 事件入口 |
+| `NotInitialized` | 先完成 SATagSDK 初始化 |
+| `NotIntegrated` | 添加对应渠道依赖 |
+| `Failed` | 记录原因并继续业务流程 |
+| `InvalidEvent` | 使用非空事件名重新打点 |
 
-SATagSDK 的事件接口不会因为第三方 SDK 初始化或打点失败而抛出异常。
+事件名必须是非空字符串。事件参数必须使用 `NSDictionary<NSString *, id>`，Swift 对应 `[String: Any]`。
 
-## 7. DebugView
-
-从当前可见的 `UIViewController` 打开调试页：
+## 8. DebugView
 
 Objective-C：
 
 ```objc
-[[SATagSDK sharedInstance]
-    presentDebugViewFromViewController:self];
+[[SATagSDK sharedInstance] presentDebugViewFromViewController:self];
 ```
 
 Swift：
@@ -339,96 +332,42 @@ Swift：
 SATagSDK.sharedInstance().presentDebugView(from: self)
 ```
 
-DebugView 会展示：
+DebugView 展示：
 
-- AppsFlyer、Facebook、TikTok 是否已集成
-- 每个渠道的初始化状态
-- 初始化失败原因
-- 配置来源
-- 脱敏后的 App ID、Key、Token
+- 当前检测到的渠道依赖。
+- 配置来源。
+- 初始化状态。
+- 脱敏后的 ID、Key、Token。
+- 最近一次初始化原因。
 
-DebugView 不展示完整敏感配置。未调用初始化接口时，页面会提示尚未初始化。
+调用条件：必须传入当前已显示或可用于 `presentViewController:` 的 `UIViewController`。如果传入空对象，方法直接返回。
 
-## 8. XCFramework 集成
+## 9. 自动化验收清单
 
-### 8.1 构建
+接入完成后，大模型必须要求开发人员或 CI 验证：
 
-在仓库根目录执行：
+- [ ] iOS Deployment Target 为 `13.0` 或更高。
+- [ ] AppsFlyer 依赖已集成。
+- [ ] 初始化调用同时传入 `devKey` 和 `appleAppID`。
+- [ ] AppsFlyer 参数缺失时，Facebook/TikTok 不会初始化。
+- [ ] Facebook 仅在需要时添加 `Facebook` subspec，并配置 `FacebookAppID`。
+- [ ] TikTok 仅在需要时添加 `TikTok` subspec，并配置三个必要键。
+- [ ] 初始化 completion 已检查每个渠道的 `state`。
+- [ ] 统一事件和单渠道事件均使用非空事件名。
+- [ ] 未初始化渠道打点不会导致崩溃。
+- [ ] DebugView 可从真实页面打开。
+- [ ] 不输出完整敏感配置。
+- [ ] XCFramework 集成时没有重复添加三方 SDK。
+- [ ] 使用的是 SDK 发布方提供的 `SATagSDK-{version}.zip`，没有要求接入方构建 SATagSDK 源码。
+- [ ] ZIP 顶层只有 `SATagSDK.xcframework`、`SATagSDK-Integration.html`、`SATagSDK-Integration.md`。
 
-```bash
-chmod +x Scripts/BuildSATagSDKXCFramework.sh
-./Scripts/BuildSATagSDKXCFramework.sh
-```
+## 10. 禁止推断的内容
 
-脚本会分别构建设备和模拟器版本，并生成：
+以下内容未由 SATagSDK 公共协议定义，接入时不得自行编造：
 
-```text
-Build/SATagSDK.xcframework
-```
-
-包含的平台：
-
-- iOS 真机 `arm64`
-- iOS Simulator `arm64`
-- iOS Simulator `x86_64`
-
-构建脚本会检查三方依赖和资源是否完整，任一关键产物缺失时直接失败，不生成不完整的 XCFramework。
-
-### 8.2 宿主工程集成
-
-1. 将 `Build/SATagSDK.xcframework` 拖入宿主工程。
-2. 在目标 Target 的 `Frameworks, Libraries, and Embedded Content` 中确认已添加。
-3. 按 Xcode 对 XCFramework 中动态依赖的提示完成 Embed 配置。
-4. 在需要使用的 `.m` 文件中导入：
-
-   ```objc
-   #import <SATagSDK/SATagSDK.h>
-   ```
-
-5. Swift 工程直接导入：
-
-   ```swift
-   import SATagSDK
-   ```
-
-XCFramework 已包含构建时使用的 AppsFlyer、Facebook、TikTok 依赖，不需要在使用 XCFramework 的宿主工程中再次通过 CocoaPods 添加这三个渠道 SDK。
-
-## 9. 常见问题
-
-### 9.1 AppsFlyer 返回缺少配置
-
-检查初始化调用中的 `devKey` 和 `appleAppID` 是否为空或只包含空白字符。AppsFlyer 是必接渠道，两个参数不完整时其它渠道也不会初始化。
-
-### 9.2 返回“未集成”
-
-检查 Podfile 是否包含对应 subspec：
-
-```ruby
-pod 'SATagSDK', :subspecs => ['AppsFlyer', 'Facebook', 'TikTok']
-```
-
-如果使用的是 XCFramework，确认使用的是包含完整依赖的 `Build/SATagSDK.xcframework`。
-
-### 9.3 Facebook 返回缺少配置
-
-检查 `Info.plist` 中是否存在 `FacebookAppID`。同时建议补齐 `FacebookClientToken` 和 `FacebookDisplayName`。
-
-### 9.4 TikTok 返回缺少配置
-
-确认以下三项均已填写：
-
-- `TikTokAccessToken`
-- `TikTokAppID`
-- `TikTokTTAppID`
-
-### 9.5 重复调用初始化
-
-重复初始化不会重复执行第三方初始化逻辑，已完成初始化的渠道会返回 `SATagInitializationStateAlreadyInitialized`。
-
-## 10. 版本信息
-
-- 当前版本：`1.0.0`
-- CocoaPods：`SATagSDK`
-- 最低 iOS 版本：`13.0`
-- GitHub：[iamgang520/SATagSDK](https://github.com/iamgang520/SATagSDK)
-- CocoaPods：[SATagSDK](https://cocoapods.org/pods/SATagSDK)
+- 第三方渠道的服务端网络成功状态。
+- 第三方渠道的额外业务事件参数约束。
+- 未在本文件列出的 `Info.plist` 键。
+- 未在 SATagSDK 公共头文件中声明的方法。
+- 事件缓存、离线重试、去重或持久化能力。
+- 任何未集成渠道的初始化成功状态。

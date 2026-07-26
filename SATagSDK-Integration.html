@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SATagSDK Objective-C 和 Swift 接入说明">
+  <title>SATagSDK 接入说明</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #5d677a;
+      --line: #dfe4ed;
+      --accent: #1769e0;
+      --accent-soft: #eaf2ff;
+      --code: #111827;
+      --code-text: #e7edf7;
+      --success: #157347;
+      --warning: #9a6700;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.7 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 900px);
+      gap: 36px;
+      width: min(1220px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 36px 0 72px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 24px;
+      align-self: start;
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    .brand {
+      margin: 0 0 4px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .version {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-title {
+      margin: 18px 0 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 4px 0;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    .hero {
+      padding: 34px 38px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 46px);
+    }
+
+    h2 {
+      margin: 52px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: 26px;
+    }
+
+    h3 {
+      margin: 28px 0 10px;
+      font-size: 19px;
+    }
+
+    p {
+      margin: 10px 0 16px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .callout {
+      margin: 20px 0;
+      padding: 14px 16px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .tile {
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .tile strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tile span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    pre {
+      position: relative;
+      overflow: auto;
+      margin: 14px 0 20px;
+      padding: 18px;
+      background: var(--code);
+      border-radius: 8px;
+      color: var(--code-text);
+      font: 13px/1.65 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    code {
+      padding: 2px 5px;
+      background: #edf0f5;
+      border-radius: 4px;
+      font: .9em "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+      font-size: inherit;
+    }
+
+    .copy {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 9px;
+      border: 1px solid #596579;
+      border-radius: 5px;
+      background: #263244;
+      color: #fff;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .copy:hover {
+      background: #34445b;
+    }
+
+    table {
+      width: 100%;
+      margin: 14px 0 22px;
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef2f8;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    ul, ol {
+      padding-left: 24px;
+    }
+
+    li + li {
+      margin-top: 5px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .checklist li::before {
+      content: "□";
+      display: inline-block;
+      width: 24px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .footer {
+      margin-top: 52px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        display: block;
+        width: min(100% - 28px, 900px);
+        padding-top: 14px;
+      }
+
+      .sidebar {
+        position: static;
+        margin-bottom: 14px;
+      }
+
+      .sidebar nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 18px;
+      }
+
+      .nav-title {
+        grid-column: 1 / -1;
+      }
+
+      .hero {
+        padding: 26px 22px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2 class="brand">SATagSDK</h2>
+      <p class="version">接入说明 · v1.0.0 · iOS 13+</p>
+      <nav aria-label="文档导航">
+        <div class="nav-title">开始接入</div>
+        <a href="#overview">概览</a>
+        <a href="#cocoapods">CocoaPods</a>
+        <a href="#xcframework">XCFramework</a>
+        <a href="#plist">Info.plist</a>
+        <div class="nav-title">调用 API</div>
+        <a href="#initialize">初始化</a>
+        <a href="#events">事件打点</a>
+        <a href="#debug">DebugView</a>
+        <div class="nav-title">排查问题</div>
+        <a href="#states">状态说明</a>
+        <a href="#checklist">验收清单</a>
+      </nav>
+    </aside>
+
+    <main>
+      <header class="hero" id="overview">
+        <p class="eyebrow">Objective-C SDK · Swift Compatible</p>
+        <h1>SATagSDK 接入说明</h1>
+        <p>统一接入 AppsFlyer、Facebook 和 TikTok 打点。SDK 内部使用 Objective-C 实现，Objective-C 与 Swift 工程均可直接调用。</p>
+      </header>
+
+      <section>
+        <div class="callout">
+          <strong>重要：AppsFlyer 是必接渠道</strong>
+          初始化接口必须同时传入 AppsFlyer <code>devKey</code> 和 <code>appleAppID</code>。任一参数为空时，SATagSDK 不会初始化 Facebook/TikTok。
+        </div>
+        <div class="grid">
+          <div class="tile"><strong>最低系统</strong><span>iOS 13.0</span></div>
+          <div class="tile"><strong>当前版本</strong><span>1.0.0</span></div>
+          <div class="tile"><strong>实现语言</strong><span>Objective-C，支持 Swift 直接调用</span></div>
+        </div>
+      </section>
+
+      <section id="cocoapods">
+        <h2>1. CocoaPods 集成</h2>
+        <h3>集成全部渠道</h3>
+        <p>在 Podfile 中添加以下内容。默认包含 Core、AppsFlyer、Facebook 和 TikTok。</p>
+        <pre><button class="copy" type="button">复制</button><code>target 'YourApp' do
+  pod 'SATagSDK', '~&gt; 1.0'
+end</code></pre>
+        <p>执行 <code>pod install</code>，之后使用生成的 <code>.xcworkspace</code> 打开工程。</p>
+
+        <h3>按需选择渠道</h3>
+        <p>AppsFlyer subspec 必须保留，Facebook 和 TikTok 可以按业务需要选择。</p>
+        <pre><button class="copy" type="button">复制</button><code># AppsFlyer + Facebook
+pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'Facebook']
+
+# 仅 AppsFlyer
+pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer']
+
+# AppsFlyer + TikTok
+pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'TikTok']</code></pre>
+      </section>
+
+      <section id="xcframework">
+        <h2>2. XCFramework 集成</h2>
+        <p>不使用 CocoaPods 时，直接使用 SDK 发布方提供的单包发布物。接入方不需要获取 SATagSDK 源码工程，也不需要执行 SDK 构建脚本。</p>
+        <p>请向 SDK 发布方获取对应版本的 ZIP，例如：</p>
+        <pre><code>SATagSDK-1.0.0.zip</code></pre>
+        <p>ZIP 根目录只有以下文件：</p>
+        <pre><code>SATagSDK.xcframework
+SATagSDK-Integration.html
+SATagSDK-Integration.md</code></pre>
+        <ol>
+          <li>解压 ZIP。</li>
+          <li>将 <code>SATagSDK.xcframework</code> 拖入宿主工程。</li>
+          <li>在 Target 的 <code>Frameworks, Libraries, and Embedded Content</code> 中确认已添加。</li>
+          <li>按 Xcode 对动态依赖的提示完成 Embed 配置。</li>
+        </ol>
+        <p>XCFramework 已包含 AppsFlyer、Facebook、TikTok 二进制依赖，不要在同一宿主工程中重复添加这些渠道的 CocoaPods 依赖。</p>
+      </section>
+
+      <section id="plist">
+        <h2>3. Info.plist 配置</h2>
+        <h3>Facebook</h3>
+        <pre><button class="copy" type="button">复制</button><code>&lt;key&gt;FacebookAppID&lt;/key&gt;
+&lt;string&gt;YOUR_FACEBOOK_APP_ID&lt;/string&gt;
+&lt;key&gt;FacebookClientToken&lt;/key&gt;
+&lt;string&gt;YOUR_FACEBOOK_CLIENT_TOKEN&lt;/string&gt;
+&lt;key&gt;FacebookDisplayName&lt;/key&gt;
+&lt;string&gt;Your App Name&lt;/string&gt;</code></pre>
+        <table>
+          <thead><tr><th>键名</th><th>要求</th></tr></thead>
+          <tbody>
+            <tr><td><code>FacebookAppID</code></td><td>初始化必需</td></tr>
+            <tr><td><code>FacebookClientToken</code></td><td>建议配置</td></tr>
+            <tr><td><code>FacebookDisplayName</code></td><td>建议配置</td></tr>
+          </tbody>
+        </table>
+
+        <h3>TikTok</h3>
+        <pre><button class="copy" type="button">复制</button><code>&lt;key&gt;TikTokAccessToken&lt;/key&gt;
+&lt;string&gt;YOUR_TIKTOK_ACCESS_TOKEN&lt;/string&gt;
+&lt;key&gt;TikTokAppID&lt;/key&gt;
+&lt;string&gt;YOUR_TIKTOK_APP_ID&lt;/string&gt;
+&lt;key&gt;TikTokTTAppID&lt;/key&gt;
+&lt;string&gt;YOUR_TIKTOK_TT_APP_ID&lt;/string&gt;</code></pre>
+        <p>TikTok 三项配置均为初始化必需。兼容别名：<code>TikTokBusinessAccessToken</code>、<code>TikTokBusinessAppID</code>、<code>TikTokBusinessTTAppID</code>。</p>
+        <p>AppsFlyer 参数不由 SATagSDK 从 Info.plist 读取，必须通过初始化接口传入。</p>
+      </section>
+
+      <section id="initialize">
+        <h2>4. 初始化</h2>
+        <p>建议在 App 启动阶段调用。SATagSDK 会自动 Hook App 生命周期，并保留宿主 AppDelegate 的原始实现。</p>
+        <h3>Objective-C</h3>
+        <pre><button class="copy" type="button">复制</button><code>#import &lt;SATagSDK/SATagSDK.h&gt;
+
+[[SATagSDK sharedInstance]
+    initializeWithAppsFlyerDevKey:@"YOUR_APPSFLYER_DEV_KEY"
+                        appleAppID:@"YOUR_APPLE_APP_ID"
+                        completion:^(NSArray&lt;SATagInitializationResult *&gt; *results) {
+    for (SATagInitializationResult *result in results) {
+        NSLog(@"%@ state=%ld reason=%@",
+              result.providerName,
+              (long)result.state,
+              result.reason);
+    }
+}];</code></pre>
+
+        <h3>Swift</h3>
+        <pre><button class="copy" type="button">复制</button><code>import SATagSDK
+
+SATagSDK.sharedInstance().initialize(
+    withAppsFlyerDevKey: "YOUR_APPSFLYER_DEV_KEY",
+    appleAppID: "YOUR_APPLE_APP_ID"
+) { results in
+    results.forEach { result in
+        print("\(result.providerName): \(result.state) - \(result.reason)")
+    }
+}</code></pre>
+      </section>
+
+      <section id="events">
+        <h2>5. 事件打点</h2>
+        <h3>统一广播</h3>
+        <pre><button class="copy" type="button">复制</button><code>[[SATagSDK sharedInstance]
+    trackEvent:@"purchase"
+        parameters:@{
+            @"product_id": @"sku_001",
+            @"price": @6.0,
+            @"currency": @"CNY"
+        }
+        completion:^(NSArray&lt;SATagEventResult *&gt; *results) {
+    for (SATagEventResult *result in results) {
+        NSLog(@"%@ state=%ld reason=%@",
+              result.providerName,
+              (long)result.state,
+              result.reason);
+    }
+}];</code></pre>
+        <pre><button class="copy" type="button">复制</button><code>SATagSDK.sharedInstance().track(
+    event: "purchase",
+    parameters: [
+        "product_id": "sku_001",
+        "price": 6.0,
+        "currency": "CNY"
+    ]
+) { results in
+    results.forEach { result in
+        print("\(result.providerName): \(result.state)")
+    }
+}</code></pre>
+
+        <h3>单渠道事件</h3>
+        <table>
+          <thead><tr><th>Objective-C</th><th>Swift</th></tr></thead>
+          <tbody>
+            <tr><td><code>trackAppsFlyerEvent:parameters:completion:</code></td><td><code>trackAppsFlyer(event:parameters:completion:)</code></td></tr>
+            <tr><td><code>trackFacebookEvent:parameters:completion:</code></td><td><code>trackFacebook(event:parameters:completion:)</code></td></tr>
+            <tr><td><code>trackTikTokEvent:parameters:completion:</code></td><td><code>trackTikTok(event:parameters:completion:)</code></td></tr>
+          </tbody>
+        </table>
+        <p>参数类型为 Objective-C 的 <code>NSDictionary&lt;NSString *, id&gt; *</code>，Swift 对应 <code>[String: Any]</code>。事件名不能为空。</p>
+      </section>
+
+      <section id="debug">
+        <h2>6. DebugView</h2>
+        <pre><button class="copy" type="button">复制</button><code>// Objective-C
+[[SATagSDK sharedInstance] presentDebugViewFromViewController:self];
+
+// Swift
+SATagSDK.sharedInstance().presentDebugView(from: self)</code></pre>
+        <p>DebugView 展示已检测到的渠道、配置来源、初始化状态、失败原因和脱敏后的配置值，不展示完整 Key、Token 或 App ID。</p>
+      </section>
+
+      <section id="states">
+        <h2>7. 状态说明</h2>
+        <table>
+          <thead><tr><th>初始化状态</th><th>含义</th></tr></thead>
+          <tbody>
+            <tr><td><code>Initialized</code></td><td>本地初始化调用完成，可以打点</td></tr>
+            <tr><td><code>MissingConfiguration</code></td><td>缺少必要配置，修复后重新初始化</td></tr>
+            <tr><td><code>NotIntegrated</code></td><td>工程未集成对应渠道依赖</td></tr>
+            <tr><td><code>Failed</code></td><td>初始化失败或被必接渠道规则跳过</td></tr>
+            <tr><td><code>AlreadyInitialized</code></td><td>已初始化，可以继续打点</td></tr>
+          </tbody>
+        </table>
+        <table>
+          <thead><tr><th>事件状态</th><th>含义</th></tr></thead>
+          <tbody>
+            <tr><td><code>Accepted</code></td><td>已调用第三方事件入口</td></tr>
+            <tr><td><code>NotInitialized</code></td><td>先完成 SATagSDK 初始化</td></tr>
+            <tr><td><code>NotIntegrated</code></td><td>添加对应渠道依赖</td></tr>
+            <tr><td><code>Failed</code></td><td>读取 reason 并继续业务流程</td></tr>
+            <tr><td><code>InvalidEvent</code></td><td>使用非空事件名</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="checklist">
+        <h2>8. 接入验收清单</h2>
+        <ul class="checklist">
+          <li>iOS Deployment Target 为 13.0 或更高。</li>
+          <li>AppsFlyer 依赖已集成，且初始化同时传入 devKey 和 appleAppID。</li>
+          <li>初始化 completion 已检查每个渠道的 state。</li>
+          <li>Facebook/TikTok 配置与实际选择的 subspec 一致。</li>
+          <li>统一事件和单渠道事件使用非空事件名。</li>
+          <li>未初始化或未集成渠道打点不会导致崩溃。</li>
+          <li>DebugView 可以从真实页面打开。</li>
+          <li>没有输出完整敏感配置。</li>
+          <li>XCFramework 方式没有重复添加第三方 SDK。</li>
+        </ul>
+      </section>
+
+      <footer class="footer">
+        SATagSDK 1.0.0 · 最低支持 iOS 13.0 ·
+        <a href="https://github.com/iamgang520/SATagSDK">GitHub</a> ·
+        <a href="https://cocoapods.org/pods/SATagSDK">CocoaPods</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+      }
+
+      return new Promise(function (resolve, reject) {
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        var copied = false;
+        try {
+          copied = document.execCommand("copy");
+        } finally {
+          document.body.removeChild(textarea);
+        }
+        if (copied) {
+          resolve();
+        } else {
+          reject(new Error("copy failed"));
+        }
+      });
+    }
+
+    document.querySelectorAll(".copy").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var code = button.parentElement.querySelector("code").innerText;
+        copyText(code).then(function () {
+          var original = button.innerText;
+          button.innerText = "已复制";
+          setTimeout(function () { button.innerText = original; }, 1200);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

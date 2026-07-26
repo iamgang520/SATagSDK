@@ -1,6 +1,9 @@
 # SATagSDK
 
-完整接入说明请查看：[SATagSDK-Integration.md](SATagSDK-Integration.md)
+接入资料：
+
+- 开发人员：[SATagSDK-Integration.html](SATagSDK-Integration.html)
+- 大模型：[SATagSDK-Integration.md](SATagSDK-Integration.md)
 
 ## CocoaPods
 
@@ -78,12 +81,29 @@ SATagSDK.sharedInstance().initialize(
 - `TikTokAppID`
 - `TikTokTTAppID`
 
-## 构建 XCFramework
+## SDK 发布者构建 XCFramework
+
+以下内容仅供 SDK 发布者维护发布包使用，接入方不需要执行。接入方请直接获取
+发布方提供的 ZIP，并阅读 HTML 接入页或 Markdown 接入规范。
 
 ```bash
 ./Scripts/BuildSATagSDKXCFramework.sh
 ```
 
-生成的 `Build/SATagSDK.xcframework` 已包含 AppsFlyer、Facebook、TikTok 的
-二进制依赖和隐私资源。直接集成这个 XCFramework 时不需要再单独添加三方
-SDK；若使用 CocoaPods，则由 subspec 负责选择三方依赖。
+脚本会在临时目录完成构建和校验，最终只在 `Build/` 下生成：
+
+```text
+SATagSDK-{version}.zip
+```
+
+压缩包内只有：
+
+```text
+SATagSDK.xcframework
+SATagSDK-Integration.html
+SATagSDK-Integration.md
+```
+
+其中 `SATagSDK.xcframework` 已包含 AppsFlyer、Facebook、TikTok 的二进制依赖
+和隐私资源；直接集成这个 XCFramework 时不需要再单独添加三方 SDK。开发人员
+请阅读 HTML 接入页，大模型请读取 Markdown 接入规范。

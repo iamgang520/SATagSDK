@@ -1,13 +1,14 @@
 #!/bin/bash
 #
-# SATagSDK XCFramework 构建脚本
+# SATagSDK XCFramework 发布包构建脚本
 #
 # 说明：
 # 1. 通过 CocoaPods Workspace 构建 SDK，确保三方依赖参与构建。
 # 2. 真机和模拟器使用不同 DerivedData，避免嵌套 xcodebuild 争用 build.db。
 # 3. 将三方动态 Framework 嵌入 SATagSDK.framework/Frameworks，最终用户只需要
 #    引入一个 SATagSDK.xcframework；宿主 App 仍需要按 Apple 规则签名/嵌入该包。
-# 4. 所有关键产物都在打包前校验，任一渠道缺失时立即失败，不生成不完整包。
+# 4. 所有中间产物写入系统临时目录，Build 目录最终只保留版本化 ZIP。
+# 5. ZIP 只包含 SATagSDK.xcframework、开发者 HTML 和模型 Markdown。
 #
 
 set -euo pipefail
@@ -16,10 +17,24 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 WORKSPACE_PATH="${ROOT_DIR}/SATagSDKDemo.xcworkspace"
 SCHEME_NAME="SATagSDK"
 CONFIGURATION="${CONFIGURATION:-Release}"
-BUILD_ROOT="${ROOT_DIR}/Build/XCFramework"
+OUTPUT_ROOT="${ROOT_DIR}/Build"
+VERSION="$(sed -nE "s/^[[:space:]]*s\\.version[[:space:]]*=[[:space:]]*['\"]([^'\"]+)['\"].*/\\1/p" \
+  "${ROOT_DIR}/SATagSDK.podspec" | head -n 1)"
+
+if [[ -z "$VERSION" ]]; then
+  printf '[SATagSDK] error: 无法从 SATagSDK.podspec 读取版本号\n' >&2
+  exit 1
+fi
+
+TEMP_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/SATagSDK-build.XXXXXX")"
+trap 'rm -rf "$TEMP_ROOT"' EXIT
+
+BUILD_ROOT="${TEMP_ROOT}/XCFramework"
 DEVICE_DERIVED_DATA="${BUILD_ROOT}/DerivedData-iphoneos"
 SIMULATOR_DERIVED_DATA="${BUILD_ROOT}/DerivedData-iphonesimulator"
-OUTPUT_PATH="${ROOT_DIR}/Build/SATagSDK.xcframework"
+OUTPUT_PATH="${BUILD_ROOT}/SATagSDK.xcframework"
+PACKAGE_ROOT="${TEMP_ROOT}/SATagSDK-${VERSION}"
+OUTPUT_ZIP="${OUTPUT_ROOT}/SATagSDK-${VERSION}.zip"
 
 DEVICE_PRODUCTS="${DEVICE_DERIVED_DATA}/Build/Products/${CONFIGURATION}-iphoneos"
 SIMULATOR_PRODUCTS="${SIMULATOR_DERIVED_DATA}/Build/Products/${CONFIGURATION}-iphonesimulator"
@@ -36,6 +51,12 @@ fail() {
 require_directory() {
   if [[ ! -d "$1" ]]; then
     fail "找不到目录：$1"
+  fi
+}
+
+require_file() {
+  if [[ ! -f "$1" ]]; then
+    fail "找不到文件：$1"
   fi
 }
 
@@ -90,8 +111,52 @@ copy_resource_bundles() {
   done < <(find "$products_path" -type d -name '*.bundle' -print)
 }
 
+package_release() {
+  require_directory "$OUTPUT_PATH"
+  require_directory "${OUTPUT_PATH}/ios-arm64"
+  require_directory "${OUTPUT_PATH}/ios-arm64_x86_64-simulator"
+  require_file "$ROOT_DIR/SATagSDK-Integration.html"
+  require_file "$ROOT_DIR/SATagSDK-Integration.md"
+
+  rm -rf "$PACKAGE_ROOT"
+  mkdir -p "$PACKAGE_ROOT"
+  ditto "$OUTPUT_PATH" "${PACKAGE_ROOT}/SATagSDK.xcframework"
+  ditto "${ROOT_DIR}/SATagSDK-Integration.html" "${PACKAGE_ROOT}/SATagSDK-Integration.html"
+  ditto "${ROOT_DIR}/SATagSDK-Integration.md" "${PACKAGE_ROOT}/SATagSDK-Integration.md"
+
+  mkdir -p "$OUTPUT_ROOT"
+  rm -f "$OUTPUT_ZIP"
+  log "生成发布包 ${OUTPUT_ZIP}"
+  (
+    cd "$PACKAGE_ROOT"
+    /usr/bin/zip -qry "$OUTPUT_ZIP" \
+      "SATagSDK.xcframework" \
+      "SATagSDK-Integration.html" \
+      "SATagSDK-Integration.md"
+  )
+
+  /usr/bin/unzip -t "$OUTPUT_ZIP" >/dev/null
+  ZIP_TOP_LEVEL_ENTRIES="$(
+    /usr/bin/unzip -Z1 "$OUTPUT_ZIP" |
+      awk -F/ 'NF { print $1 }' |
+      sort -u
+  )"
+  EXPECTED_TOP_LEVEL_ENTRIES=$'SATagSDK-Integration.html\nSATagSDK-Integration.md\nSATagSDK.xcframework'
+  [[ "$ZIP_TOP_LEVEL_ENTRIES" == "$EXPECTED_TOP_LEVEL_ENTRIES" ]] \
+    || fail "发布包顶层内容不符合预期：${ZIP_TOP_LEVEL_ENTRIES}"
+  /usr/bin/unzip -Z1 "$OUTPUT_ZIP" | grep -qx "SATagSDK-Integration.html" \
+    || fail "发布包缺少 SATagSDK-Integration.html"
+  /usr/bin/unzip -Z1 "$OUTPUT_ZIP" | grep -qx "SATagSDK-Integration.md" \
+    || fail "发布包缺少 SATagSDK-Integration.md"
+  /usr/bin/unzip -Z1 "$OUTPUT_ZIP" | grep '^SATagSDK\.xcframework/' >/dev/null \
+    || fail "发布包缺少 SATagSDK.xcframework"
+}
+
 require_directory "$WORKSPACE_PATH"
-mkdir -p "$BUILD_ROOT"
+require_file "$ROOT_DIR/SATagSDK-Integration.html"
+require_file "$ROOT_DIR/SATagSDK-Integration.md"
+rm -rf "$OUTPUT_ROOT"
+mkdir -p "$OUTPUT_ROOT"
 
 build_platform \
   iphoneos \
@@ -134,17 +199,13 @@ done
 copy_resource_bundles "$DEVICE_PRODUCTS" "$DEVICE_SDK_FRAMEWORK"
 copy_resource_bundles "$SIMULATOR_PRODUCTS" "$SIMULATOR_SDK_FRAMEWORK"
 
-rm -rf "$OUTPUT_PATH"
-mkdir -p "$(dirname "$OUTPUT_PATH")"
-
 log "生成 ${OUTPUT_PATH}"
 xcodebuild -create-xcframework \
   -framework "$DEVICE_SDK_FRAMEWORK" \
   -framework "$SIMULATOR_SDK_FRAMEWORK" \
   -output "$OUTPUT_PATH"
 
-require_directory "$OUTPUT_PATH"
-require_directory "${OUTPUT_PATH}/ios-arm64"
-require_directory "${OUTPUT_PATH}/ios-arm64_x86_64-simulator"
+package_release
 
-log "XCFramework 构建完成：${OUTPUT_PATH}"
+log "构建完成：${OUTPUT_ZIP}"
+log "Build 目录仅保留最终发布包，临时构建目录已清理"
