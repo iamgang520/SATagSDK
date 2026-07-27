@@ -16,7 +16,7 @@ optional_providers:
   - TikTok
   - Firebase
 developer_document: SATagSDK-Integration.html
-expo_bridge_directory: expo
+expo_package: satag-sdk-expo
 ```
 
 ## 2. 硬性规则
@@ -114,7 +114,19 @@ XCFramework 已包含构建时使用的 AppsFlyer、Facebook、TikTok、Firebase
 
 ### 3.3 Expo iOS 接入
 
-Expo 接入使用仓库 `expo/` 目录中的 `satag-sdk-expo` 原生桥接包。桥接层使用 Objective-C React Native Native Module，底层仍调用 SATagSDK Objective-C API。
+Expo 接入使用 SDK 发布方提供的 `satag-sdk-expo` npm 原生桥接包。桥接层使用
+Objective-C React Native Native Module，底层仍调用 SATagSDK Objective-C API。
+仓库中的 `expo/` 目录仅用于 SDK 发布方维护和发布 npm 包，接入方不需要获取
+SATagSDK 源码工程。
+
+安装发布方提供的包：
+
+```bash
+npm install satag-sdk-expo
+```
+
+如果发布方使用私有 npm registry，应使用发布方提供的 registry 配置；如果包尚未
+公开发布，应向发布方索取 npm tarball 或内部包地址，不要执行 SATagSDK 的构建脚本。
 
 支持范围：
 
