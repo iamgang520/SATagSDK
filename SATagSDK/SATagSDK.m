@@ -10,6 +10,7 @@
 #import "Providers/SATagAppsFlyerProvider.h"
 #import "Providers/SATagFacebookProvider.h"
 #import "Providers/SATagTikTokProvider.h"
+#import "Providers/SATagFirebaseProvider.h"
 #import "Views/SATagDebugViewController.h"
 
 @interface SATagSDK ()
@@ -49,7 +50,8 @@
         _coordinator = [[SATagInitializationCoordinator alloc] initWithProviders:@[
             [[SATagAppsFlyerProvider alloc] init],
             [[SATagFacebookProvider alloc] init],
-            [[SATagTikTokProvider alloc] init]
+            [[SATagTikTokProvider alloc] init],
+            [[SATagFirebaseProvider alloc] init]
         ]];
     }
     return self;
@@ -128,6 +130,15 @@
     [self satag_trackEvent:eventName
                 parameters:parameters
                  provider:SATagProviderTikTok
+              completion:completion];
+}
+
+- (void)trackFirebaseEvent:(NSString *)eventName
+                parameters:(NSDictionary<NSString *,id> *)parameters
+                completion:(void (^)(SATagEventResult *))completion {
+    [self satag_trackEvent:eventName
+                parameters:parameters
+                 provider:SATagProviderFirebase
               completion:completion];
 }
 

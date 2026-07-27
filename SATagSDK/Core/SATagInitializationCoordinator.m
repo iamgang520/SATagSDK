@@ -91,7 +91,9 @@
                 ? appsFlyerConfiguration
                 : (provider.provider == SATagProviderFacebook
                    ? [SATagConfigurationReader facebookConfiguration]
-                   : [SATagConfigurationReader tikTokConfiguration]);
+                   : (provider.provider == SATagProviderTikTok
+                      ? [SATagConfigurationReader tikTokConfiguration]
+                      : [SATagConfigurationReader firebaseConfiguration]));
             [results addObject:[provider initializeWithConfiguration:configuration]];
         }
 

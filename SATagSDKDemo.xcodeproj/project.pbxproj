@@ -47,6 +47,7 @@
 		C77B96A3FB24C638B84D592A /* SATagAppsFlyerProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7802BC3CF9BAF1C71914253A /* SATagAppsFlyerProvider.m */; };
 		D0CDA96D7BCB1489D356E005 /* SATagTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D9C8B16B22FEF9BCE07E3652 /* SATagTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E27D69C32F7372FA85C3A5B2 /* SATagFacebookProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 9535D6932B16CC1ED1E75447 /* SATagFacebookProvider.m */; };
+		F1A100000000000000000001 /* SATagFirebaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A200000000000000000002 /* SATagFirebaseProvider.m */; };
 		F8997C8E1A5FF4C3FBF35B65 /* SATagConfigurationReader.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3A396F04060D7BB47B6C52 /* SATagConfigurationReader.m */; };
 		FADABBF312246303279A6703 /* NSString+SATagTrim.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FEA2EF5FB1E950099CFF7A0 /* NSString+SATagTrim.m */; };
 		FDAB1C04E8E4B73A6B1EE388 /* SATagEventResult.h in Headers */ = {isa = PBXBuildFile; fileRef = A25FF13ED0893FFCD7314F7D /* SATagEventResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -148,6 +149,8 @@
 		F32200F448030050F268B929 /* SATagLifecycleHook.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagLifecycleHook.h; sourceTree = "<group>"; };
 		FB84E05B4D74551DB115C888 /* SATagTikTokProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagTikTokProvider.h; sourceTree = "<group>"; };
 		FE2B29A553041A1E787AFBA1 /* SATagTypes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagTypes.m; sourceTree = "<group>"; };
+		F1A200000000000000000001 /* SATagFirebaseProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SATagFirebaseProvider.h; sourceTree = "<group>"; };
+		F1A200000000000000000002 /* SATagFirebaseProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SATagFirebaseProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -263,6 +266,8 @@
 				7802BC3CF9BAF1C71914253A /* SATagAppsFlyerProvider.m */,
 				AF4AD22E334F659126301753 /* SATagFacebookProvider.h */,
 				9535D6932B16CC1ED1E75447 /* SATagFacebookProvider.m */,
+				F1A200000000000000000001 /* SATagFirebaseProvider.h */,
+				F1A200000000000000000002 /* SATagFirebaseProvider.m */,
 				B391EBD191C1A78277567682 /* SATagProviderSupport.h */,
 				2CBE389F98B2AB45B844EFA7 /* SATagTikTokProvider.h */,
 				ED37FC5D2425E530D4F0B896 /* SATagTikTokProvider.m */,
@@ -690,6 +695,7 @@
 				395F993B73F235C1F1E48363 /* SATagTypes.m in Sources */,
 				C77B96A3FB24C638B84D592A /* SATagAppsFlyerProvider.m in Sources */,
 				E27D69C32F7372FA85C3A5B2 /* SATagFacebookProvider.m in Sources */,
+				F1A100000000000000000001 /* SATagFirebaseProvider.m in Sources */,
 				A2A457F60F48FF9766C28CF8 /* SATagTikTokProvider.m in Sources */,
 				C53D50E1AC3160AC89C46EB7 /* SATagSDK.m in Sources */,
 				7C2CF3B669258996B23E9A1A /* SATagDebugViewController.m in Sources */,

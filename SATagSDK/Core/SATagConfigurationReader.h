@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSDictionary<NSString *, NSString *> *)tikTokConfiguration;
 
++ (NSDictionary<NSString *, NSString *> *)firebaseConfiguration;
+
 + (BOOL)isNonEmptyValue:(nullable NSString *)value;
 
 + (NSString *)maskedValue:(nullable NSString *)value;

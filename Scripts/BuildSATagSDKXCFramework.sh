@@ -181,6 +181,16 @@ DEPENDENCY_NAMES=(
   "FBSDKCoreKit"
   "FBSDKCoreKit_Basics"
   "TikTokBusinessSDK"
+  "FirebaseAnalytics"
+  "FirebaseCore"
+  "FirebaseCoreInternal"
+  "FirebaseInstallations"
+  "GoogleAdsOnDeviceConversion"
+  "GoogleAppMeasurement"
+  "GoogleAppMeasurementIdentitySupport"
+  "GoogleUtilities"
+  "FBLPromises"
+  "nanopb"
 )
 
 for dependency_name in "${DEPENDENCY_NAMES[@]}"; do

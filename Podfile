@@ -4,10 +4,11 @@ target 'SATagSDK' do
   use_frameworks!
 
   # SDK Target 使用三方 Pod 自带的二进制/源码分发，保证完整构建产物
-  # 中包含 AppsFlyer、Facebook 和 TikTok 的真实实现。
+  # 中包含 AppsFlyer、Facebook、TikTok 和 Firebase 的真实实现。
   pod 'AppsFlyerFramework', '7.0.1'
   pod 'FBSDKCoreKit', '18.0.1'
   pod 'TikTokBusinessSDK', '1.7.1'
+  pod 'FirebaseAnalytics', '11.15.0'
 end
 
 target 'SATagSDKDemo' do

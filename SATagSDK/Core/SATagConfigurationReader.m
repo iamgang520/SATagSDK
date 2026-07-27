@@ -53,6 +53,31 @@ static NSString *SATagInfoString(NSString *key) {
     };
 }
 
++ (NSDictionary<NSString *,NSString *> *)firebaseConfiguration {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"GoogleService-Info"
+                                                      ofType:@"plist"];
+    NSDictionary *plist = path.length > 0
+        ? [NSDictionary dictionaryWithContentsOfFile:path]
+        : @{};
+
+    NSString *googleAppID = [plist[@"GOOGLE_APP_ID"] isKindOfClass:NSString.class]
+        ? plist[@"GOOGLE_APP_ID"]
+        : @"";
+    NSString *projectID = [plist[@"PROJECT_ID"] isKindOfClass:NSString.class]
+        ? plist[@"PROJECT_ID"]
+        : @"";
+    NSString *bundleID = [plist[@"BUNDLE_ID"] isKindOfClass:NSString.class]
+        ? plist[@"BUNDLE_ID"]
+        : @"";
+
+    return @{
+        @"googleAppID": googleAppID,
+        @"projectID": projectID,
+        @"bundleID": bundleID,
+        @"configFile": path.length > 0 ? @"GoogleService-Info.plist" : @"未配置"
+    };
+}
+
 + (BOOL)isNonEmptyValue:(NSString *)value {
     return [value isKindOfClass:NSString.class] && value.trimWhitespaceAndNewlines.length > 0;
 }

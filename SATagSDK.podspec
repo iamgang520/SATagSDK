@@ -5,11 +5,11 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SATagSDK'
-  s.version          = '1.0.0'
-  s.summary          = 'SATagSDK 聚合 AppsFlyer、Facebook、TikTok 打点'
+  s.version          = '1.1.0'
+  s.summary          = 'SATagSDK 聚合 AppsFlyer、Facebook、TikTok、Firebase 打点'
   s.description      = <<-DESC
   SATagSDK provides a unified Objective-C and Swift-compatible API for AppsFlyer,
-  Facebook and TikTok custom events.
+  Facebook, TikTok and Firebase Analytics custom events.
                        DESC
   s.homepage         = 'https://github.com/iamgang520/SATagSDK'
   s.license          = { :type => 'Commercial', :text => 'Copyright Star Fortune.' }
@@ -59,9 +59,17 @@ Pod::Spec.new do |s|
     ss.dependency 'TikTokBusinessSDK', '1.7.1'
   end
 
+  s.subspec 'Firebase' do |ss|
+    ss.dependency 'SATagSDK/Core'
+    # Firebase 12.x 的最低 iOS 版本已高于本 SDK 的 iOS 13 约束；
+    # 11.15.0 是已验证可用于 iOS 13 的 Firebase Analytics 版本。
+    ss.dependency 'FirebaseAnalytics', '11.15.0'
+  end
+
   s.subspec 'All' do |ss|
     ss.dependency 'SATagSDK/AppsFlyer'
     ss.dependency 'SATagSDK/Facebook'
     ss.dependency 'SATagSDK/TikTok'
+    ss.dependency 'SATagSDK/Firebase'
   end
 end

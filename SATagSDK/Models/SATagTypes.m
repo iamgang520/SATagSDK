@@ -13,6 +13,8 @@ NSString *SATagProviderDisplayName(SATagProvider provider) {
             return @"Facebook";
         case SATagProviderTikTok:
             return @"TikTok";
+        case SATagProviderFirebase:
+            return @"Firebase";
     }
     return @"未知渠道";
 }

@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, SATagProvider) {
     SATagProviderAppsFlyer = 0,
     SATagProviderFacebook = 1,
-    SATagProviderTikTok = 2
+    SATagProviderTikTok = 2,
+    SATagProviderFirebase = 3
 };
 
 typedef NS_ENUM(NSInteger, SATagInitializationState) {

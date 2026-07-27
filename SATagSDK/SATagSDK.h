@@ -21,7 +21,7 @@ FOUNDATION_EXPORT const unsigned char SATagSDKVersionString[];
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * 聚合 AppsFlyer、Facebook 和 TikTok 的统一打点入口。
+ * 聚合 AppsFlyer、Facebook、TikTok 和 Firebase Analytics 的统一打点入口。
  *
  * SDK 主体使用 Objective-C 实现，公开头文件使用 nullability、轻量泛型和
  * NS_ENUM，Swift 工程可以直接通过 SATagSDK.sharedInstance() 调用。
@@ -35,7 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
  * 初始化已集成且配置完整的打点 SDK。
  *
  * AppsFlyer 的 devKey 和 Apple App ID 由本方法传入；Facebook/TikTok 的配置
- * 从宿主 App 的 Info.plist 读取。completion 会在主线程回调，每个渠道都会返回
+ * 从宿主 App 的 Info.plist 读取；Firebase Analytics 的配置从
+ * GoogleService-Info.plist 读取。completion 会在主线程回调，每个渠道都会返回
  * 明确的“已初始化、未集成、缺少配置或失败”状态。
  *
  * AppsFlyer 是必接渠道。devKey 或 appleAppID 任一为空时，SDK 会直接返回
@@ -79,6 +80,12 @@ NS_ASSUME_NONNULL_BEGIN
               parameters:(NSDictionary<NSString *, id> *)parameters
               completion:(void (^)(SATagEventResult *result))completion
     NS_SWIFT_NAME(trackTikTok(event:parameters:completion:));
+
+/// 只向 Firebase Analytics 发送自定义事件。
+- (void)trackFirebaseEvent:(NSString *)eventName
+                parameters:(NSDictionary<NSString *, id> *)parameters
+                completion:(void (^)(SATagEventResult *result))completion
+    NS_SWIFT_NAME(trackFirebase(event:parameters:completion:));
 
 /**
  * 从当前界面弹出 SDK 调试页。

@@ -6,7 +6,7 @@
 
 ```yaml
 sdk_name: SATagSDK
-sdk_version: 1.0.0
+sdk_version: 1.1.0
 implementation_language: Objective-C
 swift_interop: Objective-C module import, no Swift wrapper required
 minimum_ios_version: "13.0"
@@ -14,7 +14,9 @@ required_provider: AppsFlyer
 optional_providers:
   - Facebook
   - TikTok
+  - Firebase
 developer_document: SATagSDK-Integration.html
+expo_bridge_directory: expo
 ```
 
 ## 2. 硬性规则
@@ -23,7 +25,7 @@ developer_document: SATagSDK-Integration.html
 2. AppsFlyer 初始化参数必须通过公开初始化接口传入，不能只写入 `Info.plist`。
 3. AppsFlyer 的 `devKey` 和 `appleAppID` 必须同时存在且不能是空白字符。
 4. AppsFlyer 参数不完整时，SATagSDK 不初始化任何渠道，也不安装生命周期 Hook。
-5. Facebook 和 TikTok 只有在对应依赖已经集成且配置完整时才允许初始化。
+5. Facebook、TikTok 和 Firebase 只有在对应依赖已经集成且配置完整时才允许初始化。
 6. 事件接口不会抛异常；必须读取结果对象判断每个渠道的状态。
 7. 不要在宿主 App 中重复调用第三方 SDK 的初始化入口；由 SATagSDK 负责调用。
 8. 不要把完整 Key、Token 或 App ID 输出到日志、工单或用户界面。
@@ -39,7 +41,7 @@ developer_document: SATagSDK-Integration.html
 完整集成：
 
 ```ruby
-pod 'SATagSDK', '~> 1.0'
+pod 'SATagSDK', '~> 1.1'
 ```
 
 只集成 AppsFlyer 和 Facebook：
@@ -60,23 +62,29 @@ pod 'SATagSDK', :subspecs => ['AppsFlyer']
 pod 'SATagSDK', :subspecs => ['AppsFlyer', 'TikTok']
 ```
 
+只集成 AppsFlyer 和 Firebase：
+
+```ruby
+pod 'SATagSDK', :subspecs => ['AppsFlyer', 'Firebase']
+```
+
 规则：
 
 - `AppsFlyer` subspec 必须存在。
-- `Facebook` 和 `TikTok` subspec 可以省略。
-- `pod 'SATagSDK'` 默认等价于集成 `Core + AppsFlyer + Facebook + TikTok`。
+- `Facebook`、`TikTok` 和 `Firebase` subspec 可以省略。
+- `pod 'SATagSDK'` 默认等价于集成 `Core + AppsFlyer + Facebook + TikTok + Firebase`。
 - 执行 `pod install` 后，必须使用 `.xcworkspace` 打开工程。
 
 ### 3.2 使用已交付的 XCFramework 发布包
 
 适用条件：宿主工程不使用 CocoaPods，或需要单包交付。
 
-接入方只需要从 SDK 发布方获取已经生成的 `SATagSDK-1.0.0.zip`。接入方不需要：
+接入方只需要从 SDK 发布方获取已经生成的 `SATagSDK-1.1.0.zip`。接入方不需要：
 
 - 获取 SATagSDK 源码工程。
 - 获取或打开 SATagSDKDemo 工程。
 - 执行 SATagSDK 的构建脚本。
-- 自行编译 AppsFlyer、Facebook 或 TikTok 依赖。
+- 自行编译 AppsFlyer、Facebook、TikTok 或 Firebase 依赖。
 
 如果发布包不存在，应向 SDK 发布方索取对应版本的 ZIP，而不是要求业务开发人员修改或构建 SATagSDK 源码。
 
@@ -102,7 +110,62 @@ Objective-C 工程使用：
 #import <SATagSDK/SATagSDK.h>
 ```
 
-XCFramework 已包含构建时使用的 AppsFlyer、Facebook、TikTok 二进制依赖，不要在同一个宿主工程中再次添加这些渠道的 CocoaPods 依赖。
+XCFramework 已包含构建时使用的 AppsFlyer、Facebook、TikTok、Firebase 二进制依赖，不要在同一个宿主工程中再次添加这些渠道的 CocoaPods 依赖。
+
+### 3.3 Expo iOS 接入
+
+Expo 接入使用仓库 `expo/` 目录中的 `satag-sdk-expo` 原生桥接包。桥接层使用 Objective-C React Native Native Module，底层仍调用 SATagSDK Objective-C API。
+
+支持范围：
+
+- Expo Prebuild。
+- Expo development build。
+- EAS iOS Build。
+- 当前只支持 iOS；Android 没有 SATagSDK 原生 Provider。
+- Expo Go 不包含本项目自定义原生模块，不能直接加载。
+
+Firebase 配置应由 Expo 项目提供 `GoogleService-Info.plist`：
+
+```json
+{
+  "expo": {
+    "plugins": [
+      [
+        "satag-sdk-expo",
+        {
+          "googleServicesFile": "./GoogleService-Info.plist"
+        }
+      ]
+    ],
+    "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist"
+    }
+  }
+}
+```
+
+Expo JavaScript 调用：
+
+```ts
+import * as SATagSDK from 'satag-sdk-expo';
+
+const initializationResults = await SATagSDK.initialize({
+  appsFlyerDevKey: 'YOUR_APPSFLYER_DEV_KEY',
+  appleAppID: 'YOUR_APPLE_APP_ID'
+});
+
+const results = await SATagSDK.track('purchase', {
+  product_id: 'sku_001',
+  price: 6,
+  currency: 'CNY'
+});
+
+await SATagSDK.trackFirebase('screen_view', {
+  screen_name: 'Home'
+});
+```
+
+原生依赖变化后必须重新执行 `npx expo prebuild` 并构建 development build，不能只重新加载 Metro。
 
 ## 4. 渠道与配置矩阵
 
@@ -111,6 +174,7 @@ XCFramework 已包含构建时使用的 AppsFlyer、Facebook、TikTok 二进制�
 | AppsFlyer | 是 | `SATagSDK/AppsFlyer` 或完整 XCFramework | 初始化接口 | `devKey`、`appleAppID` |
 | Facebook | 否 | `SATagSDK/Facebook` 或完整 XCFramework | `Info.plist` | `FacebookAppID` |
 | TikTok | 否 | `SATagSDK/TikTok` 或完整 XCFramework | `Info.plist` | `TikTokAccessToken`、`TikTokAppID`、`TikTokTTAppID` |
+| Firebase | 否 | `SATagSDK/Firebase` 或完整 XCFramework | `GoogleService-Info.plist` | `GOOGLE_APP_ID` |
 
 ### 4.1 Facebook Info.plist
 
@@ -151,6 +215,12 @@ SATagSDK 读取的键：
 - `TikTokBusinessTTAppID` 等价于 `TikTokTTAppID`。
 
 不要同时使用同一配置的多个别名；优先使用标准键名。
+
+### 4.3 Firebase 配置
+
+从 Firebase 控制台下载 `GoogleService-Info.plist`，将其加入宿主 App 的主 Target。文件至少应包含 `GOOGLE_APP_ID`；SATagSDK 会通过 Firebase 的 `FIRApp` 和 `FIRAnalytics` 入口完成初始化与事件调用。
+
+DebugView 会展示脱敏后的 `GOOGLE_APP_ID`、`PROJECT_ID`、`BUNDLE_ID` 和配置文件来源，不展示完整敏感配置。
 
 ## 5. 初始化流程
 
@@ -194,7 +264,7 @@ SATagSDK.sharedInstance().initialize(
 1. 从项目安全配置或构建配置取得 AppsFlyer `devKey`。
 2. 从项目安全配置或构建配置取得 AppsFlyer `appleAppID`。
 3. 通过 `initialize(withAppsFlyerDevKey:appleAppID:completion:)` 传入两个值。
-4. 如果任一值为空或只包含空白字符，不得调用任何 Facebook/TikTok 初始化代码。
+4. 如果任一值为空或只包含空白字符，不得调用任何其它渠道初始化代码。
 5. 在 completion 中遍历全部 `SATagInitializationResult`。
 6. 只有 `state` 为 `SATagInitializationStateInitialized` 或 `SATagInitializationStateAlreadyInitialized` 时，才把该渠道标记为可打点。
 
@@ -287,6 +357,10 @@ Objective-C 方法：
 - (void)trackTikTokEvent:(NSString *)eventName
               parameters:(NSDictionary<NSString *, id> *)parameters
               completion:(void (^)(SATagEventResult *result))completion;
+
+- (void)trackFirebaseEvent:(NSString *)eventName
+                parameters:(NSDictionary<NSString *, id> *)parameters
+                completion:(void (^)(SATagEventResult *result))completion;
 ```
 
 Swift 方法名：
@@ -295,6 +369,7 @@ Swift 方法名：
 trackAppsFlyer(event:parameters:completion:)
 trackFacebook(event:parameters:completion:)
 trackTikTok(event:parameters:completion:)
+trackFirebase(event:parameters:completion:)
 ```
 
 ### 7.3 事件结果协议
@@ -351,9 +426,11 @@ DebugView 展示：
 - [ ] iOS Deployment Target 为 `13.0` 或更高。
 - [ ] AppsFlyer 依赖已集成。
 - [ ] 初始化调用同时传入 `devKey` 和 `appleAppID`。
-- [ ] AppsFlyer 参数缺失时，Facebook/TikTok 不会初始化。
+- [ ] AppsFlyer 参数缺失时，其它渠道不会初始化。
 - [ ] Facebook 仅在需要时添加 `Facebook` subspec，并配置 `FacebookAppID`。
 - [ ] TikTok 仅在需要时添加 `TikTok` subspec，并配置三个必要键。
+- [ ] Firebase 仅在需要时添加 `Firebase` subspec，并将 `GoogleService-Info.plist` 加入宿主 Target。
+- [ ] Expo 项目使用 development build/EAS Build，不使用 Expo Go 加载 SATagSDK。
 - [ ] 初始化 completion 已检查每个渠道的 `state`。
 - [ ] 统一事件和单渠道事件均使用非空事件名。
 - [ ] 未初始化渠道打点不会导致崩溃。

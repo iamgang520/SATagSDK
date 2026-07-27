@@ -88,9 +88,11 @@
         [self providerWithState:SATagInitializationStateInitialized provider:SATagProviderFacebook];
     SATagTestProvider *tikTokProvider =
         [self providerWithState:SATagInitializationStateInitialized provider:SATagProviderTikTok];
+    SATagTestProvider *firebaseProvider =
+        [self providerWithState:SATagInitializationStateInitialized provider:SATagProviderFirebase];
     SATagInitializationCoordinator *coordinator =
         [[SATagInitializationCoordinator alloc] initWithProviders:@[
-            appsFlyerProvider, facebookProvider, tikTokProvider
+            appsFlyerProvider, facebookProvider, tikTokProvider, firebaseProvider
         ]];
 
     NSArray<SATagInitializationResult *> *results =
@@ -102,13 +104,35 @@
     XCTAssertEqual(results[0].state, SATagInitializationStateMissingConfiguration);
     XCTAssertEqual(results[1].state, SATagInitializationStateFailed);
     XCTAssertEqual(results[2].state, SATagInitializationStateFailed);
+    XCTAssertEqual(results[3].state, SATagInitializationStateFailed);
     XCTAssertEqual(appsFlyerProvider.initializationCount, 0U);
     XCTAssertEqual(facebookProvider.initializationCount, 0U);
     XCTAssertEqual(tikTokProvider.initializationCount, 0U);
+    XCTAssertEqual(firebaseProvider.initializationCount, 0U);
     XCTAssertEqual([coordinator trackEvent:@"blocked"
                                 parameters:@{}
                              forProvider:SATagProviderFacebook].state,
                    SATagEventStateNotInitialized);
+}
+
+- (void)testFirebaseProviderCanBeTrackedWhenInitializationSucceeds {
+    SATagTestProvider *provider = [self providerWithState:SATagInitializationStateInitialized
+                                                 provider:SATagProviderFirebase];
+    SATagInitializationCoordinator *coordinator =
+        [[SATagInitializationCoordinator alloc] initWithProviders:@[provider]];
+
+    NSArray<SATagInitializationResult *> *results =
+        [coordinator initializeWithAppsFlyerConfiguration:@{
+            @"devKey": @"valid-dev-key",
+            @"appleAppID": @"123456789"
+        }];
+    SATagEventResult *eventResult = [coordinator trackEvent:@"screen_view"
+                                                  parameters:@{@"screen": @"Home"}
+                                               forProvider:SATagProviderFirebase];
+
+    XCTAssertEqual(results.firstObject.state, SATagInitializationStateInitialized);
+    XCTAssertEqual(eventResult.state, SATagEventStateAccepted);
+    XCTAssertEqualObjects(eventResult.providerName, @"Firebase");
 }
 
 - (void)testNotIntegratedProviderIsReportedAndDoesNotSendEvents {

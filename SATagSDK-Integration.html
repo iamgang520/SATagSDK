@@ -308,12 +308,13 @@
   <div class="layout">
     <aside class="sidebar">
       <h2 class="brand">SATagSDK</h2>
-      <p class="version">接入说明 · v1.0.0 · iOS 13+</p>
+      <p class="version">接入说明 · v1.1.0 · iOS 13+</p>
       <nav aria-label="文档导航">
         <div class="nav-title">开始接入</div>
         <a href="#overview">概览</a>
         <a href="#cocoapods">CocoaPods</a>
         <a href="#xcframework">XCFramework</a>
+        <a href="#expo">Expo</a>
         <a href="#plist">Info.plist</a>
         <div class="nav-title">调用 API</div>
         <a href="#initialize">初始化</a>
@@ -329,17 +330,17 @@
       <header class="hero" id="overview">
         <p class="eyebrow">Objective-C SDK · Swift Compatible</p>
         <h1>SATagSDK 接入说明</h1>
-        <p>统一接入 AppsFlyer、Facebook 和 TikTok 打点。SDK 内部使用 Objective-C 实现，Objective-C 与 Swift 工程均可直接调用。</p>
+        <p>统一接入 AppsFlyer、Facebook、TikTok 和 Firebase Analytics 打点。SDK 内部使用 Objective-C 实现，Objective-C、Swift 与 Expo iOS 工程均可直接调用。</p>
       </header>
 
       <section>
         <div class="callout">
           <strong>重要：AppsFlyer 是必接渠道</strong>
-          初始化接口必须同时传入 AppsFlyer <code>devKey</code> 和 <code>appleAppID</code>。任一参数为空时，SATagSDK 不会初始化 Facebook/TikTok。
+          初始化接口必须同时传入 AppsFlyer <code>devKey</code> 和 <code>appleAppID</code>。任一参数为空时，SATagSDK 不会初始化其它渠道。
         </div>
         <div class="grid">
           <div class="tile"><strong>最低系统</strong><span>iOS 13.0</span></div>
-          <div class="tile"><strong>当前版本</strong><span>1.0.0</span></div>
+          <div class="tile"><strong>当前版本</strong><span>1.1.0</span></div>
           <div class="tile"><strong>实现语言</strong><span>Objective-C，支持 Swift 直接调用</span></div>
         </div>
       </section>
@@ -347,14 +348,14 @@
       <section id="cocoapods">
         <h2>1. CocoaPods 集成</h2>
         <h3>集成全部渠道</h3>
-        <p>在 Podfile 中添加以下内容。默认包含 Core、AppsFlyer、Facebook 和 TikTok。</p>
+        <p>在 Podfile 中添加以下内容。默认包含 Core、AppsFlyer、Facebook、TikTok 和 Firebase。</p>
         <pre><button class="copy" type="button">复制</button><code>target 'YourApp' do
-  pod 'SATagSDK', '~&gt; 1.0'
+  pod 'SATagSDK', '~&gt; 1.1'
 end</code></pre>
         <p>执行 <code>pod install</code>，之后使用生成的 <code>.xcworkspace</code> 打开工程。</p>
 
         <h3>按需选择渠道</h3>
-        <p>AppsFlyer subspec 必须保留，Facebook 和 TikTok 可以按业务需要选择。</p>
+        <p>AppsFlyer subspec 必须保留，Facebook、TikTok 和 Firebase 可以按业务需要选择。</p>
         <pre><button class="copy" type="button">复制</button><code># AppsFlyer + Facebook
 pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'Facebook']
 
@@ -362,14 +363,17 @@ pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'Facebook']
 pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer']
 
 # AppsFlyer + TikTok
-pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'TikTok']</code></pre>
+pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'TikTok']
+
+# AppsFlyer + Firebase
+pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'Firebase']</code></pre>
       </section>
 
       <section id="xcframework">
         <h2>2. XCFramework 集成</h2>
         <p>不使用 CocoaPods 时，直接使用 SDK 发布方提供的单包发布物。接入方不需要获取 SATagSDK 源码工程，也不需要执行 SDK 构建脚本。</p>
         <p>请向 SDK 发布方获取对应版本的 ZIP，例如：</p>
-        <pre><code>SATagSDK-1.0.0.zip</code></pre>
+        <pre><code>SATagSDK-1.1.0.zip</code></pre>
         <p>解压后，ZIP 根目录包含以下文件：</p>
         <table>
           <thead><tr><th>文件</th><th>用途</th><th>谁需要使用</th></tr></thead>
@@ -397,11 +401,53 @@ pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'TikTok']</code></pre>
           <li>在 Target 的 <code>Frameworks, Libraries, and Embedded Content</code> 中确认已添加。</li>
           <li>按 Xcode 对动态依赖的提示完成 Embed 配置。</li>
         </ol>
-        <p>XCFramework 已包含 AppsFlyer、Facebook、TikTok 二进制依赖，不要在同一宿主工程中重复添加这些渠道的 CocoaPods 依赖。</p>
+        <p>XCFramework 已包含 AppsFlyer、Facebook、TikTok 和 Firebase 二进制依赖，不要在同一宿主工程中重复添加这些渠道的 CocoaPods 依赖。</p>
+      </section>
+
+      <section id="expo">
+        <h2>3. Expo iOS 集成</h2>
+        <p>Expo 接入需要独立安装 <code>satag-sdk-expo</code> 原生桥接包。桥接层使用 Objective-C React Native Native Module，底层仍调用同一份 SATagSDK 二进制。</p>
+        <p>支持 Expo Prebuild、Expo development build 和 EAS iOS Build；不支持 Expo Go，因为 Expo Go 不包含本项目的自定义原生模块。当前仅支持 iOS。</p>
+        <pre><button class="copy" type="button">复制</button><code>npm install satag-sdk-expo</code></pre>
+        <p>如果使用 Firebase，将 Firebase 控制台下载的 <code>GoogleService-Info.plist</code> 放入 Expo 工程，并在 <code>app.json</code> 或 <code>app.config.js</code> 中配置：</p>
+        <pre><button class="copy" type="button">复制</button><code>{
+  "expo": {
+    "plugins": [
+      [
+        "satag-sdk-expo",
+        {
+          "googleServicesFile": "./GoogleService-Info.plist"
+        }
+      ]
+    ],
+    "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist"
+    }
+  }
+}</code></pre>
+        <p>添加或修改原生依赖后重新执行 <code>npx expo prebuild</code>，并使用 development build 或 EAS Build。不能只重新加载 Metro。</p>
+        <pre><button class="copy" type="button">复制</button><code>import * as SATagSDK from "satag-sdk-expo";
+
+const initializationResults = await SATagSDK.initialize({
+  appsFlyerDevKey: "YOUR_APPSFLYER_DEV_KEY",
+  appleAppID: "YOUR_APPLE_APP_ID"
+});
+
+const results = await SATagSDK.track("purchase", {
+  product_id: "sku_001",
+  price: 6,
+  currency: "CNY"
+});
+
+await SATagSDK.trackFirebase("screen_view", {
+  screen_name: "Home"
+});
+
+await SATagSDK.presentDebugView();</code></pre>
       </section>
 
       <section id="plist">
-        <h2>3. Info.plist 配置</h2>
+        <h2>4. Info.plist 配置</h2>
         <h3>Facebook</h3>
         <pre><button class="copy" type="button">复制</button><code>&lt;key&gt;FacebookAppID&lt;/key&gt;
 &lt;string&gt;YOUR_FACEBOOK_APP_ID&lt;/string&gt;
@@ -426,11 +472,13 @@ pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'TikTok']</code></pre>
 &lt;key&gt;TikTokTTAppID&lt;/key&gt;
 &lt;string&gt;YOUR_TIKTOK_TT_APP_ID&lt;/string&gt;</code></pre>
         <p>TikTok 三项配置均为初始化必需。兼容别名：<code>TikTokBusinessAccessToken</code>、<code>TikTokBusinessAppID</code>、<code>TikTokBusinessTTAppID</code>。</p>
+        <h3>Firebase</h3>
+        <p>从 Firebase 控制台下载 <code>GoogleService-Info.plist</code>，加入宿主 App 的主 Target。文件至少需要包含 <code>GOOGLE_APP_ID</code>；如果使用 Expo，请按上面的 Expo 配置提供同一文件。</p>
         <p>AppsFlyer 参数不由 SATagSDK 从 Info.plist 读取，必须通过初始化接口传入。</p>
       </section>
 
       <section id="initialize">
-        <h2>4. 初始化</h2>
+        <h2>5. 初始化</h2>
         <p>建议在 App 启动阶段调用。SATagSDK 会自动 Hook App 生命周期，并保留宿主 AppDelegate 的原始实现。</p>
         <h3>Objective-C</h3>
         <pre><button class="copy" type="button">复制</button><code>#import &lt;SATagSDK/SATagSDK.h&gt;
@@ -461,7 +509,7 @@ SATagSDK.sharedInstance().initialize(
       </section>
 
       <section id="events">
-        <h2>5. 事件打点</h2>
+        <h2>6. 事件打点</h2>
         <h3>统一广播</h3>
         <pre><button class="copy" type="button">复制</button><code>[[SATagSDK sharedInstance]
     trackEvent:@"purchase"
@@ -498,13 +546,14 @@ SATagSDK.sharedInstance().initialize(
             <tr><td><code>trackAppsFlyerEvent:parameters:completion:</code></td><td><code>trackAppsFlyer(event:parameters:completion:)</code></td></tr>
             <tr><td><code>trackFacebookEvent:parameters:completion:</code></td><td><code>trackFacebook(event:parameters:completion:)</code></td></tr>
             <tr><td><code>trackTikTokEvent:parameters:completion:</code></td><td><code>trackTikTok(event:parameters:completion:)</code></td></tr>
+            <tr><td><code>trackFirebaseEvent:parameters:completion:</code></td><td><code>trackFirebase(event:parameters:completion:)</code></td></tr>
           </tbody>
         </table>
         <p>参数类型为 Objective-C 的 <code>NSDictionary&lt;NSString *, id&gt; *</code>，Swift 对应 <code>[String: Any]</code>。事件名不能为空。</p>
       </section>
 
       <section id="debug">
-        <h2>6. DebugView</h2>
+        <h2>7. DebugView</h2>
         <pre><button class="copy" type="button">复制</button><code>// Objective-C
 [[SATagSDK sharedInstance] presentDebugViewFromViewController:self];
 
@@ -514,7 +563,7 @@ SATagSDK.sharedInstance().presentDebugView(from: self)</code></pre>
       </section>
 
       <section id="states">
-        <h2>7. 状态说明</h2>
+        <h2>8. 状态说明</h2>
         <table>
           <thead><tr><th>初始化状态</th><th>含义</th></tr></thead>
           <tbody>
@@ -538,12 +587,14 @@ SATagSDK.sharedInstance().presentDebugView(from: self)</code></pre>
       </section>
 
       <section id="checklist">
-        <h2>8. 接入验收清单</h2>
+        <h2>9. 接入验收清单</h2>
         <ul class="checklist">
           <li>iOS Deployment Target 为 13.0 或更高。</li>
           <li>AppsFlyer 依赖已集成，且初始化同时传入 devKey 和 appleAppID。</li>
           <li>初始化 completion 已检查每个渠道的 state。</li>
           <li>Facebook/TikTok 配置与实际选择的 subspec 一致。</li>
+          <li>Firebase 仅在需要时添加 Firebase subspec，并将 GoogleService-Info.plist 加入宿主 Target。</li>
+          <li>Expo 项目使用 development build 或 EAS Build，没有使用 Expo Go 加载 SATagSDK。</li>
           <li>统一事件和单渠道事件使用非空事件名。</li>
           <li>未初始化或未集成渠道打点不会导致崩溃。</li>
           <li>DebugView 可以从真实页面打开。</li>
@@ -553,7 +604,7 @@ SATagSDK.sharedInstance().presentDebugView(from: self)</code></pre>
       </section>
 
       <footer class="footer">
-        SATagSDK 1.0.0 · 最低支持 iOS 13.0 ·
+        SATagSDK 1.1.0 · 最低支持 iOS 13.0 ·
         <a href="https://github.com/iamgang520/SATagSDK">GitHub</a> ·
         <a href="https://cocoapods.org/pods/SATagSDK">CocoaPods</a>
       </footer>
