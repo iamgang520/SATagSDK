@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'SATagSDKExpo'
-  s.version = '1.1.3'
+  s.version = '1.1.4'
   s.summary = 'Expo bridge for SATagSDK'
   s.description = 'Objective-C React Native bridge and Expo Config Plugin for SATagSDK.'
   s.homepage = 'https://github.com/iamgang520/SATagSDK'

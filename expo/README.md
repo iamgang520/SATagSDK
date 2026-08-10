@@ -14,7 +14,7 @@ SATagSDK 的 Expo iOS 原生桥接包。桥接层使用 Objective-C React Native
 发布 npm 包后：
 
 ```bash
-npm install satag-sdk-expo@1.1.3
+npm install satag-sdk-expo@1.1.4
 ```
 
 当前仓库开发验证可以使用本地包：
