@@ -122,7 +122,7 @@ SATagSDK 源码工程。
 安装发布方提供的包：
 
 ```bash
-npm install satag-sdk-expo
+npm install satag-sdk-expo@1.1.3
 ```
 
 如果发布方使用私有 npm registry，应使用发布方提供的 registry 配置；如果包尚未
