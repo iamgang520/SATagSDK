@@ -308,7 +308,7 @@
   <div class="layout">
     <aside class="sidebar">
       <h2 class="brand">SATagSDK</h2>
-      <p class="version">接入说明 · v1.1.0 · iOS 13+</p>
+      <p class="version">接入说明 · v1.1.5 · iOS 13+</p>
       <nav aria-label="文档导航">
         <div class="nav-title">开始接入</div>
         <a href="#overview">概览</a>
@@ -340,7 +340,7 @@
         </div>
         <div class="grid">
           <div class="tile"><strong>最低系统</strong><span>iOS 13.0</span></div>
-          <div class="tile"><strong>当前版本</strong><span>1.1.0</span></div>
+          <div class="tile"><strong>当前版本</strong><span>1.1.5</span></div>
           <div class="tile"><strong>实现语言</strong><span>Objective-C，支持 Swift 直接调用</span></div>
         </div>
       </section>
@@ -373,7 +373,7 @@ pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'Firebase']</code></pre>
         <h2>2. XCFramework 集成</h2>
         <p>不使用 CocoaPods 时，直接使用 SDK 发布方提供的单包发布物。接入方不需要获取 SATagSDK 源码工程，也不需要执行 SDK 构建脚本。</p>
         <p>请向 SDK 发布方获取对应版本的 ZIP，例如：</p>
-        <pre><code>SATagSDK-1.1.0.zip</code></pre>
+        <pre><code>SATagSDK-1.1.5.zip</code></pre>
         <p>解压后，ZIP 根目录包含以下文件：</p>
         <table>
           <thead><tr><th>文件</th><th>用途</th><th>谁需要使用</th></tr></thead>
@@ -409,7 +409,7 @@ pod 'SATagSDK', :subspecs =&gt; ['AppsFlyer', 'Firebase']</code></pre>
         <p>Expo 接入需要独立安装 <code>satag-sdk-expo</code> 原生桥接包。桥接层使用 Objective-C React Native Native Module，底层仍调用同一份 SATagSDK 二进制。</p>
         <p>支持 Expo Prebuild、Expo development build 和 EAS iOS Build；不支持 Expo Go，因为 Expo Go 不包含本项目的自定义原生模块。当前仅支持 iOS。</p>
         <p>请使用 SDK 发布方提供的 npm 包或私有 registry 包。接入方不需要获取 SATagSDK 源码工程，也不需要执行 SATagSDK 的构建脚本；如果公开 npm 尚未提供该包，请向发布方索取 npm tarball 或内部包地址。</p>
-        <pre><button class="copy" type="button">复制</button><code>npm install satag-sdk-expo@1.1.4</code></pre>
+        <pre><button class="copy" type="button">复制</button><code>npm install satag-sdk-expo@1.1.6</code></pre>
         <p>如果使用 Firebase，将 Firebase 控制台下载的 <code>GoogleService-Info.plist</code> 放入 Expo 工程，并在 <code>app.json</code> 或 <code>app.config.js</code> 中配置：</p>
         <pre><button class="copy" type="button">复制</button><code>{
   "expo": {
@@ -605,7 +605,7 @@ SATagSDK.sharedInstance().presentDebugView(from: self)</code></pre>
       </section>
 
       <footer class="footer">
-        SATagSDK 1.1.0 · 最低支持 iOS 13.0 ·
+        SATagSDK 1.1.5 · 最低支持 iOS 13.0 ·
         <a href="https://github.com/iamgang520/SATagSDK">GitHub</a> ·
         <a href="https://cocoapods.org/pods/SATagSDK">CocoaPods</a>
       </footer>

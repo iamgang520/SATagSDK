@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'SATagSDKExpo'
-  s.version = '1.1.4'
+  s.version = '1.1.6'
   s.summary = 'Expo bridge for SATagSDK'
   s.description = 'Objective-C React Native bridge and Expo Config Plugin for SATagSDK.'
   s.homepage = 'https://github.com/iamgang520/SATagSDK'
@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
   s.source_files = 'ios/**/*.{h,m}'
   s.requires_arc = true
   s.dependency 'React-Core'
-  s.dependency 'SATagSDK/All', '1.1.0'
+  s.dependency 'SATagSDK/All', '1.1.5'
 end

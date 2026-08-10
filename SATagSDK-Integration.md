@@ -6,7 +6,7 @@
 
 ```yaml
 sdk_name: SATagSDK
-sdk_version: 1.1.0
+sdk_version: 1.1.5
 implementation_language: Objective-C
 swift_interop: Objective-C module import, no Swift wrapper required
 minimum_ios_version: "13.0"
@@ -79,7 +79,7 @@ pod 'SATagSDK', :subspecs => ['AppsFlyer', 'Firebase']
 
 适用条件：宿主工程不使用 CocoaPods，或需要单包交付。
 
-接入方只需要从 SDK 发布方获取已经生成的 `SATagSDK-1.1.0.zip`。接入方不需要：
+接入方只需要从 SDK 发布方获取已经生成的 `SATagSDK-1.1.5.zip`。接入方不需要：
 
 - 获取 SATagSDK 源码工程。
 - 获取或打开 SATagSDKDemo 工程。
@@ -122,7 +122,7 @@ SATagSDK 源码工程。
 安装发布方提供的包：
 
 ```bash
-npm install satag-sdk-expo@1.1.4
+npm install satag-sdk-expo@1.1.6
 ```
 
 如果发布方使用私有 npm registry，应使用发布方提供的 registry 配置；如果包尚未

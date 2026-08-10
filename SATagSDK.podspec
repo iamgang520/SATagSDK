@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SATagSDK'
-  s.version          = '1.1.0'
+  s.version          = '1.1.5'
   s.summary          = 'SATagSDK 聚合 AppsFlyer、Facebook、TikTok、Firebase 打点'
   s.description      = <<-DESC
   SATagSDK provides a unified Objective-C and Swift-compatible API for AppsFlyer,
