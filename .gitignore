@@ -1,3 +1,6 @@
+# Node
+node_modules/
+
 # CocoaPods 依赖和生成工程
 Pods/
 .bundle/

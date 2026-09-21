@@ -1,14 +1,13 @@
 #!/bin/bash
 #
-# SATagSDK XCFramework 发布包构建脚本
+# SATagSDK XCFramework 构建脚本
 #
 # 说明：
 # 1. 通过 CocoaPods Workspace 构建 SDK，确保三方依赖参与构建。
 # 2. 真机和模拟器使用不同 DerivedData，避免嵌套 xcodebuild 争用 build.db。
-# 3. 将三方动态 Framework 嵌入 SATagSDK.framework/Frameworks，最终用户只需要
-#    引入一个 SATagSDK.xcframework；宿主 App 仍需要按 Apple 规则签名/嵌入该包。
-# 4. 所有中间产物写入系统临时目录，Build 目录最终只保留版本化 ZIP。
-# 5. ZIP 只包含 SATagSDK.xcframework、开发者 HTML 和模型 Markdown。
+# 3. 将三方动态 Framework 嵌入 SATagSDK.framework/Frameworks，消费者只需要
+#    引入一个 SATagSDK.xcframework。
+# 4. Build/ 最终保留 XCFramework（供私有 Pod 发布）和版本化 ZIP（供直接接入）。
 #
 
 set -euo pipefail
@@ -18,11 +17,11 @@ WORKSPACE_PATH="${ROOT_DIR}/SATagSDKDemo.xcworkspace"
 SCHEME_NAME="SATagSDK"
 CONFIGURATION="${CONFIGURATION:-Release}"
 OUTPUT_ROOT="${ROOT_DIR}/Build"
-VERSION="$(sed -nE "s/^[[:space:]]*s\\.version[[:space:]]*=[[:space:]]*['\"]([^'\"]+)['\"].*/\\1/p" \
-  "${ROOT_DIR}/SATagSDK.podspec" | head -n 1)"
+VERSION_FILE="${ROOT_DIR}/SATagSDK/Config/SATagVersion.json"
+VERSION="$(/usr/bin/plutil -extract '0.version' raw "${VERSION_FILE}")"
 
 if [[ -z "$VERSION" ]]; then
-  printf '[SATagSDK] error: 无法从 SATagSDK.podspec 读取版本号\n' >&2
+  printf '[SATagSDK] error: 无法从 %s 读取版本号\n' "$VERSION_FILE" >&2
   exit 1
 fi
 
@@ -32,7 +31,7 @@ trap 'rm -rf "$TEMP_ROOT"' EXIT
 BUILD_ROOT="${TEMP_ROOT}/XCFramework"
 DEVICE_DERIVED_DATA="${BUILD_ROOT}/DerivedData-iphoneos"
 SIMULATOR_DERIVED_DATA="${BUILD_ROOT}/DerivedData-iphonesimulator"
-OUTPUT_PATH="${BUILD_ROOT}/SATagSDK.xcframework"
+OUTPUT_PATH="${OUTPUT_ROOT}/SATagSDK.xcframework"
 PACKAGE_ROOT="${TEMP_ROOT}/SATagSDK-${VERSION}"
 OUTPUT_ZIP="${OUTPUT_ROOT}/SATagSDK-${VERSION}.zip"
 
@@ -66,10 +65,25 @@ find_framework() {
   find "$products_path" -type d -name "${framework_name}.framework" -print -quit
 }
 
+# Xcode 26 会把 Swift 兼容库搜索路径指到不存在的 Metal toolchain 目录，
+# 导致链接 AppsFlyer/Firebase 时找不到 swiftCompatibility*。显式使用官方 toolchain。
+TOOLCHAIN_DIR="$(cd "$(xcode-select -p)/Toolchains/XcodeDefault.xctoolchain" && pwd)"
+
+swift_library_search_path() {
+  local sdk="$1"
+  case "$sdk" in
+    iphoneos) printf '%s/usr/lib/swift/iphoneos' "$TOOLCHAIN_DIR" ;;
+    iphonesimulator) printf '%s/usr/lib/swift/iphonesimulator' "$TOOLCHAIN_DIR" ;;
+    *) fail "未知 sdk：$sdk" ;;
+  esac
+}
+
 build_platform() {
   local sdk="$1"
   local destination="$2"
   local derived_data="$3"
+  local swift_lib_path
+  swift_lib_path="$(swift_library_search_path "$sdk")"
 
   log "开始构建 ${sdk}：${derived_data}"
   rm -rf "$derived_data"
@@ -83,6 +97,7 @@ build_platform() {
     BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
     SKIP_INSTALL=NO \
     CODE_SIGNING_ALLOWED=NO \
+    LIBRARY_SEARCH_PATHS="\$(inherited) ${swift_lib_path}" \
     build
 }
 
@@ -114,9 +129,13 @@ copy_resource_bundles() {
 package_release() {
   require_directory "$OUTPUT_PATH"
   require_directory "${OUTPUT_PATH}/ios-arm64"
-  require_directory "${OUTPUT_PATH}/ios-arm64_x86_64-simulator"
+  require_file "${OUTPUT_PATH}/ios-arm64/SATagSDK.framework/SATagSDK"
   require_file "$ROOT_DIR/SATagSDK-Integration.html"
   require_file "$ROOT_DIR/SATagSDK-Integration.md"
+
+  local simulator_binary
+  simulator_binary="$(find "$OUTPUT_PATH" -path '*-simulator/SATagSDK.framework/SATagSDK' -type f -print -quit)"
+  [[ -n "$simulator_binary" ]] || fail "XCFramework 缺少模拟器 slice"
 
   rm -rf "$PACKAGE_ROOT"
   mkdir -p "$PACKAGE_ROOT"
@@ -124,7 +143,6 @@ package_release() {
   ditto "${ROOT_DIR}/SATagSDK-Integration.html" "${PACKAGE_ROOT}/SATagSDK-Integration.html"
   ditto "${ROOT_DIR}/SATagSDK-Integration.md" "${PACKAGE_ROOT}/SATagSDK-Integration.md"
 
-  mkdir -p "$OUTPUT_ROOT"
   rm -f "$OUTPUT_ZIP"
   log "生成发布包 ${OUTPUT_ZIP}"
   (
@@ -144,17 +162,12 @@ package_release() {
   EXPECTED_TOP_LEVEL_ENTRIES=$'SATagSDK-Integration.html\nSATagSDK-Integration.md\nSATagSDK.xcframework'
   [[ "$ZIP_TOP_LEVEL_ENTRIES" == "$EXPECTED_TOP_LEVEL_ENTRIES" ]] \
     || fail "发布包顶层内容不符合预期：${ZIP_TOP_LEVEL_ENTRIES}"
-  /usr/bin/unzip -Z1 "$OUTPUT_ZIP" | grep -qx "SATagSDK-Integration.html" \
-    || fail "发布包缺少 SATagSDK-Integration.html"
-  /usr/bin/unzip -Z1 "$OUTPUT_ZIP" | grep -qx "SATagSDK-Integration.md" \
-    || fail "发布包缺少 SATagSDK-Integration.md"
-  /usr/bin/unzip -Z1 "$OUTPUT_ZIP" | grep '^SATagSDK\.xcframework/' >/dev/null \
-    || fail "发布包缺少 SATagSDK.xcframework"
 }
 
 require_directory "$WORKSPACE_PATH"
 require_file "$ROOT_DIR/SATagSDK-Integration.html"
 require_file "$ROOT_DIR/SATagSDK-Integration.md"
+require_file "$VERSION_FILE"
 rm -rf "$OUTPUT_ROOT"
 mkdir -p "$OUTPUT_ROOT"
 
@@ -217,5 +230,6 @@ xcodebuild -create-xcframework \
 
 package_release
 
-log "构建完成：${OUTPUT_ZIP}"
-log "Build 目录仅保留最终发布包，临时构建目录已清理"
+log "构建完成：${OUTPUT_PATH}"
+log "发布包：${OUTPUT_ZIP}"
+log "临时构建目录已清理"

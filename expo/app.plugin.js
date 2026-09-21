@@ -1,60 +1,80 @@
-const { withPodfile } = require('@expo/config-plugins');
+const { createRunOncePlugin, withPodfile } = require('@expo/config-plugins');
 
-const firebaseModularHeadersMarker = '# SATagSDK Firebase modular headers';
+const PACKAGE_NAME = '@starsdk/ios-satagsdk-expo';
+const PACKAGE_VERSION = require('./package.json').version;
+const COCOAPODS_CDN_SOURCE = "source 'https://cdn.cocoapods.org/'";
+const STAR_SPECS_SOURCE = "source 'http://172.20.30.113:13000/StarSdk/star_ios_pod_specs.git'";
+const SATAG_POD_DECLARATION = "pod 'SATagSDK'";
+
+/** 在 Podfile 顶部插入 source，保留原有 source 顺序且避免重复写入。 */
+function ensurePodSource(contents, sourceDeclaration) {
+  return contents.includes(sourceDeclaration) ? contents : `${sourceDeclaration}\n${contents}`;
+}
 
 /**
- * 为 Firebase Core 依赖链生成模块映射。
- *
- * Expo 使用静态链接时，FirebaseCoreInternal、FirebaseInstallations 会以
- * 模块方式导入 FirebaseCore 和 GoogleUtilities。该配置必须出现在宿主 App
- * 的 target 内，由插件自动写入，接入方无需维护 Podfile。
+ * 将 SATagSDK 放入 Expo 应用 target；优先插在 use_expo_modules! 之后，
+ * 对于非标准 Podfile 则退化为插入第一个 target 块。找不到 target 时明确失败。
  */
-function withFirebaseModularHeaders(config) {
-  return withPodfile(config, (podfileConfig) => {
-    const contents = podfileConfig.modResults.contents;
-    if (contents.includes(firebaseModularHeadersMarker)) {
-      return podfileConfig;
-    }
+function ensureSATagSDKPod(contents) {
+  if (new RegExp(`(^|\\n)\\s*${SATAG_POD_DECLARATION.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}\\s*(\\n|$)`).test(contents)) {
+    return contents;
+  }
 
-    const targetDeclaration = contents.match(/^target ['"][^'"]+['"] do/m);
-    if (!targetDeclaration) {
-      throw new Error('SATagSDK 无法在 Podfile 中找到 iOS target，无法配置 Firebase 模块映射。');
-    }
+  const expoModulesPattern = /^(\s*)use_expo_modules!.*$/m;
+  if (expoModulesPattern.test(contents)) {
+    return contents.replace(expoModulesPattern, (line, indentation) => `${line}\n${indentation}${SATAG_POD_DECLARATION}`);
+  }
 
-    const modularHeadersDeclaration = [
-      firebaseModularHeadersMarker,
-      "  pod 'FirebaseCore', :modular_headers => true",
-      "  pod 'FirebaseCoreInternal', :modular_headers => true",
-      "  pod 'FirebaseInstallations', :modular_headers => true",
-      "  pod 'GoogleUtilities', :modular_headers => true",
-    ].join('\n');
-    podfileConfig.modResults.contents = contents.replace(
-      targetDeclaration[0],
-      `${targetDeclaration[0]}\n  ${modularHeadersDeclaration}`,
-    );
+  const targetPattern = /^(\s*)target\s+['"][^'"]+['"]\s+do.*$/m;
+  if (targetPattern.test(contents)) {
+    return contents.replace(targetPattern, (line, indentation) => `${line}\n${indentation}  ${SATAG_POD_DECLARATION}`);
+  }
+
+  throw new Error('未找到 iOS target，无法向 Podfile 注入 SATagSDK。');
+}
+
+/**
+ * 将公开 CDN 与统一私有 Specs 源一起接入。
+ * 私有二进制 Pod 已包含渠道依赖，不再注入旧的公网 Trunk 源或额外基础库源。
+ */
+function updatePodfile(contents) {
+  let updatedContents = ensurePodSource(contents, STAR_SPECS_SOURCE);
+  updatedContents = ensurePodSource(updatedContents, COCOAPODS_CDN_SOURCE);
+  return ensureSATagSDKPod(updatedContents);
+}
+
+/**
+ * 允许接入方把 GoogleService-Info.plist 路径放到插件参数中，
+ * 避免在 app.json 和 plugins 中重复声明。
+ */
+function withGoogleServicesFile(config, options = {}) {
+  const googleServicesFile = options.googleServicesFile;
+  if (!googleServicesFile) {
+    return config;
+  }
+
+  return {
+    ...config,
+    ios: {
+      ...(config.ios || {}),
+      googleServicesFile,
+    },
+  };
+}
+
+function withSATagSDK(config, options = {}) {
+  return withPodfile(withGoogleServicesFile(config, options), (podfileConfig) => {
+    podfileConfig.modResults.contents = updatePodfile(podfileConfig.modResults.contents);
     return podfileConfig;
   });
 }
 
-/**
- * SATagSDK Expo Config Plugin。
- *
- * Expo 的 ios.googleServicesFile 会在 prebuild/EAS iOS 构建阶段把
- * GoogleService-Info.plist 加入宿主 App。这里允许接入方把该路径放到
- * SATagSDK 插件参数中，避免在 app.json 和 plugins 中重复声明。
- */
-module.exports = function withSATagSDK(config, options = {}) {
-  const googleServicesFile = options.googleServicesFile;
-  let updatedConfig = config;
-  if (googleServicesFile) {
-    updatedConfig = {
-      ...updatedConfig,
-      ios: {
-        ...(updatedConfig.ios || {}),
-        googleServicesFile,
-      },
-    };
-  }
+const plugin = createRunOncePlugin(withSATagSDK, PACKAGE_NAME, PACKAGE_VERSION);
 
-  return withFirebaseModularHeaders(updatedConfig);
+plugin._internal = {
+  ensurePodSource,
+  ensureSATagSDKPod,
+  updatePodfile,
 };
+
+module.exports = plugin;

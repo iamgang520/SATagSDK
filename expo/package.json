@@ -1,7 +1,7 @@
 {
-  "name": "satag-sdk-expo",
+  "name": "@starsdk/ios-satagsdk-expo",
   "version": "1.1.6",
-  "description": "Expo bridge for SATagSDK iOS analytics aggregation.",
+  "description": "星合 SATagSDK iOS 聚合打点 SDK 的 Expo 原生桥接包。",
   "main": "src/index.ts",
   "files": [
     "app.plugin.js",
@@ -11,6 +11,10 @@
     "README.md",
     "package.json"
   ],
+  "scripts": {
+    "build": "node -e \"['src/index.ts','app.plugin.js','ios/SATagExpoModule.m','SATagSDKExpo.podspec'].forEach((file) => require('fs').accessSync(file))\"",
+    "test": "node --test tests/app.plugin.test.cjs"
+  },
   "keywords": [
     "expo",
     "react-native",
@@ -18,14 +22,21 @@
     "appsflyer",
     "facebook",
     "tiktok",
-    "firebase"
+    "firebase",
+    "satagsdk"
   ],
+  "author": "StarSdk <oubu@staruniongame.com>",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "registry": "http://172.20.30.113:13000/api/packages/StarSdk/npm/"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/iamgang520/SATagSDK.git",
-    "directory": "expo"
+    "url": "http://172.20.30.113:13000/StarSdk/star_ios_pod_specs.git"
   },
-  "license": "Commercial",
+  "dependencies": {
+    "@expo/config-plugins": "^10.1.2"
+  },
   "peerDependencies": {
     "expo": ">=51.0.0",
     "react-native": ">=0.74.0"

@@ -18,6 +18,18 @@
 			name = BuildSATagSDKXCFramework;
 			productName = BuildSATagSDKXCFramework;
 		};
+		A4C81B2E7D9F4A11B3C5D7E9 /* PublishSATagSDKPod */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B5D92C3F8E0A5B22C4D6E8F0 /* Build configuration list for PBXAggregateTarget "PublishSATagSDKPod" */;
+			buildPhases = (
+				E80C5F62B13D8E55F7091B23 /* 发布 SATagSDK Pod */,
+			);
+			dependencies = (
+				0A2E7184D35FA077192B3D45 /* PBXTargetDependency */,
+			);
+			name = PublishSATagSDKPod;
+			productName = PublishSATagSDKPod;
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -67,6 +79,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = A0807E5830165992009B933F;
 			remoteInfo = SATagSDK;
+		};
+		F91D6073C24E9F66081A2C34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0807E2F3016597D009B933F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F2BE27CCA9FE4D91BEBDDF27;
+			remoteInfo = BuildSATagSDKXCFramework;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -532,6 +551,7 @@
 				A0807E363016597D009B933F /* SATagSDKDemo */,
 				A0807E5830165992009B933F /* SATagSDK */,
 				F2BE27CCA9FE4D91BEBDDF27 /* BuildSATagSDKXCFramework */,
+				A4C81B2E7D9F4A11B3C5D7E9 /* PublishSATagSDKPod */,
 				A1B2C3D4E5F60718293A4B75 /* SATagSDKTests */,
 			);
 		};
@@ -576,6 +596,27 @@
 			shellPath = /bin/bash;
 			shellScript = "\"${SRCROOT}/Scripts/BuildSATagSDKXCFramework.sh\"\n";
 			showEnvVarsInLog = 1;
+		};
+		E80C5F62B13D8E55F7091B23 /* 发布 SATagSDK Pod */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Scripts/PublishSATagSDKPod.sh",
+			);
+			name = "发布 SATagSDK Pod";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exec \"${SRCROOT}/Scripts/PublishSATagSDKPod.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		09222BD5DFE7F6022D7D7399 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -714,6 +755,11 @@
 			isa = PBXTargetDependency;
 			target = A0807E5830165992009B933F /* SATagSDK */;
 			targetProxy = A0807E5D30165992009B933F /* PBXContainerItemProxy */;
+		};
+		0A2E7184D35FA077192B3D45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F2BE27CCA9FE4D91BEBDDF27 /* BuildSATagSDKXCFramework */;
+			targetProxy = F91D6073C24E9F66081A2C34 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1026,6 +1072,22 @@
 			};
 			name = Release;
 		};
+		C6EA3D409F1B6C33D5E7F901 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D7FB4E51A02C7D44E6F80A12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1070,6 +1132,15 @@
 			buildConfigurations = (
 				BC3AC96575CE4E33A2F7E140 /* Debug */,
 				285CCC3B49B64EA18EA72916 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5D92C3F8E0A5B22C4D6E8F0 /* Build configuration list for PBXAggregateTarget "PublishSATagSDKPod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6EA3D409F1B6C33D5E7F901 /* Debug */,
+				D7FB4E51A02C7D44E6F80A12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

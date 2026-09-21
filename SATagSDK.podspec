@@ -1,23 +1,29 @@
 #
 # SATagSDK.podspec
-# 聚合 AppsFlyer、Facebook、TikTok 的 Objective-C 打点 SDK。
+# 本文件仅供本仓库本地 :path 开发使用。正式发布由 Scripts/PublishSATagSDKPod.sh
+# 写入私有 Specs 仓库的二进制 Podspec，不要再推送到 CocoaPods Trunk。
 #
+
+require 'json'
+
+version_file = File.join(__dir__, 'SATagSDK/Config/SATagVersion.json')
+sdk_version = JSON.parse(File.read(version_file)).fetch(0).fetch('version')
 
 Pod::Spec.new do |s|
   s.name             = 'SATagSDK'
-  s.version          = '1.1.5'
+  s.version          = sdk_version
   s.summary          = 'SATagSDK 聚合 AppsFlyer、Facebook、TikTok、Firebase 打点'
   s.description      = <<-DESC
   SATagSDK provides a unified Objective-C and Swift-compatible API for AppsFlyer,
   Facebook, TikTok and Firebase Analytics custom events.
                        DESC
-  s.homepage         = 'https://github.com/iamgang520/SATagSDK'
-  s.license          = { :type => 'Commercial', :text => 'Copyright Star Fortune.' }
-  s.author           = { 'Star Fortune' => 'sdk@starfortune.com' }
-
-  # 正式提交 CocoaPods Trunk 前通过环境变量注入真实公开仓库地址。
-  source_url = ENV['SATAG_SOURCE_URL'] || 'https://github.com/iamgang520/SATagSDK.git'
-  s.source = { :git => source_url, :tag => s.version.to_s }
+  s.homepage         = 'http://172.20.30.113:13000/StarSdk/star_ios_pod_specs'
+  s.license          = { :type => 'Proprietary', :text => 'Copyright (c) StarSdk. All rights reserved.' }
+  s.author           = { 'StarSdk' => 'oubu@staruniongame.com' }
+  s.source           = {
+    :git => 'http://172.20.30.113:13000/StarSdk/star_ios_pod_specs.git',
+    :tag => "SATagSDK-#{s.version}"
+  }
 
   s.ios.deployment_target = '13.0'
   s.requires_arc = true
